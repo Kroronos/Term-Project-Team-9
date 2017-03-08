@@ -5,6 +5,7 @@
 #include <QtCore>
 #include "state.h"
 #include "actor.h"
+#include "player.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,9 +14,14 @@ int main(int argc, char *argv[])
     State* testingEnviron = new State();
 
     //create poly and add into scene
-    Actor* player = new Actor(-10,-10,10);
+    Player* player = new Player(-10,-10,10);
     // Add the triangle polygon to the scene
-    testingEnviron->sScene->addItem(player->pTriangleItem);
+    testingEnviron->sScene->addItem(player);
+
+    //Makes Player allowed to become focusable
+    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    //Allows Player to receive input
+    player->setFocus();
 
     testingEnviron->setSceneInView();
     testingEnviron->showView();

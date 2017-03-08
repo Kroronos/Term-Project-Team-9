@@ -3,12 +3,11 @@
 #include <QtCore>
 #include <QGraphicsPolygonItem>
 
-class Actor
+class Actor: public QGraphicsPolygonItem
 {
 public:
-    QGraphicsPolygonItem* pTriangleItem;
-    //Creates a triangle with three vetices
     Actor(double vertexA, double vertexB, double vertexC);
+    Actor(QPolygonF poly);
 };
 
 #endif // ACTOR_H
