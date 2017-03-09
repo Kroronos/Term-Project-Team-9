@@ -11,7 +11,10 @@ class Player : public QObject,public Actor
     Q_OBJECT
 private:
     QSet<Qt::Key> keysPressed;
-    QTimer* timer;
+    //Timer used to update movement and similar actions that should happen on a very fast interval
+    QTimer* fastTimer;
+    //Timer used for staggered actions that should be continous
+    QTimer* slowTimer;
 
 public:
     Player(double vertexA, double vertexB, double vertexC);
@@ -19,7 +22,8 @@ public:
     void keyReleaseEvent(QKeyEvent* event);
 
 public slots:
-    void keyPressAction();
+    void keyPressFastAction();
+    void keyPressSlowAction();
 };
 
 #endif // PLAYER_H

@@ -11,12 +11,13 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    State* testingEnviron = new State();
+    State* testingEnviron = new State(800,600);
 
-    //create poly and add into scene
+    //Create Player
     Player* player = new Player(-10,-10,10);
-    // Add the triangle polygon to the scene
-    testingEnviron->sScene->addItem(player);
+
+    //Add Player To Scene
+    testingEnviron->addItem(player);
 
     //Makes Player allowed to become focusable
     player->setFlag(QGraphicsItem::ItemIsFocusable);
