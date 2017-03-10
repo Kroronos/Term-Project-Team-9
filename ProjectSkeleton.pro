@@ -37,4 +37,4 @@ HEADERS  += \
     bullet.h \
     weapon.h
 
-FORMS    += mainwindow.ui
+FORMS    +=

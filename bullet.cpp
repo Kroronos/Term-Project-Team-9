@@ -2,7 +2,7 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
-Bullet::Bullet(bool playerMade, int x, int y)
+Bullet::Bullet(bool playerMade, double x, double y)
     :Actor(-2,-2,2)
 {
     movementTimer = new QTimer();

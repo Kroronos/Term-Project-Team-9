@@ -31,7 +31,7 @@ Player::Player(double vertexA, double vertexB, double vertexC)
     //500 ms interval updates every half second
     slowTimer-> start(500);
 
-    equippedWeapon = new Weapon(500, this);
+    equippedWeapon = new Weapon(500, this, 5);
 }
 
 //Adds Keys Pressed By Player To A Set
