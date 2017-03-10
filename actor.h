@@ -5,9 +5,14 @@
 
 class Actor: public QGraphicsPolygonItem
 {
+private:
+    unsigned int vertexA;
+    unsigned int vertexB;
+    unsigned int vertexC;
 public:
     Actor(double vertexA, double vertexB, double vertexC);
-    Actor(QPolygonF poly);
+    double getHeight();
+    double getWidth();
 };
 
 #endif // ACTOR_H

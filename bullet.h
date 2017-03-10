@@ -11,8 +11,10 @@ class Bullet : public QObject, public Actor
 private:
     QTimer* movementTimer;
     bool playerMade;
+    int xMove;
+    int yMove;
 public:
-    Bullet(bool playerMade);
+    Bullet(bool playerMade, int xMove, int yMove);
 
 public slots:
     void move();

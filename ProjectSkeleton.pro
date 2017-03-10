@@ -27,12 +27,14 @@ SOURCES += main.cpp \
     state.cpp \
     actor.cpp \
     player.cpp \
-    bullet.cpp
+    bullet.cpp \
+    weapon.cpp
 
 HEADERS  += \
     state.h \
     actor.h \
     player.h \
-    bullet.h
+    bullet.h \
+    weapon.h
 
 FORMS    += mainwindow.ui

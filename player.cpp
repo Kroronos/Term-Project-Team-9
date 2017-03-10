@@ -1,7 +1,7 @@
 #include "player.h"
 #include "actor.h"
 #include "bullet.h"
-#include "QKeyEvent"
+#include <QKeyEvent>
 #include <QtCore>
 #include <QGraphicsScene>
 #include <QObject>
@@ -11,6 +11,7 @@
 Player::Player(double vertexA, double vertexB, double vertexC)
     : Actor(vertexA, vertexB, vertexC)
 {
+
     //Makes Player allowed to become focusable
     setFlag(QGraphicsItem::ItemIsFocusable);
     //Allows Player to receive input
@@ -29,6 +30,8 @@ Player::Player(double vertexA, double vertexB, double vertexC)
     fastTimer-> start(50);
     //500 ms interval updates every half second
     slowTimer-> start(500);
+
+    equippedWeapon = new Weapon(500, this);
 }
 
 //Adds Keys Pressed By Player To A Set
@@ -41,6 +44,9 @@ void Player::keyPressEvent(QKeyEvent* event)
 void Player::keyReleaseEvent(QKeyEvent* event)
 {
     keysPressed -= (Qt::Key)event->key();
+    if((Qt::Key)event->key() == Qt::Key_Space){
+        equippedWeapon->setCanFire(false);
+    }
 }
 
 //Acts on a timer interval for each key pressed
@@ -52,34 +58,43 @@ void Player::keyPressFastAction()
     foreach(Qt::Key k, keysPressed){
         //Move left
         if(k == Qt::Key_A) {
-            setPos(x()-10, y());
+            //Check to see if player is off screen region
+            if(x() - getWidth() >0) {
+                setPos(x()-10, y());
+            }
         }
         //Move right
         if(k == Qt::Key_D) {
-            setPos(x()+10, y());
+            //Check to see if player is off screen region
+            if(x() + getWidth() < scene()->width()) {
+                setPos(x()+10, y());
+            }
         }
         //Move up
         if(k == Qt::Key_W) {
-            setPos(x(), y()-10);
+            //Check to see if player is off screen region
+            if(y()-getHeight() > 0){
+                setPos(x(), y()-10);
+            }
         }
         //Move down
         if(k == Qt::Key_S) {
-            setPos(x(), y()+10);
+            //Check to see if player is off screen region
+            if(y()+getHeight() < scene()->height()) {
+                setPos(x(), y()+10);
+            }
+        }
+
+        if(k == Qt::Key_Space){
+            equippedWeapon->setCanFire(true);
         }
     }
 }
 
-//Slow actions include shooting
+//Slow actions, actions we don't want to instantly and immediately respond to player input
 void Player::keyPressSlowAction()
 {
-    foreach(Qt::Key k, keysPressed){
 
-        if(k == Qt::Key_Space){
-            Bullet* playerBullet = new Bullet(true);
-            playerBullet->setPos(x(),y());
-            scene()->addItem(playerBullet);
-        }
-    }
 }
 
 

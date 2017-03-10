@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QTimerEvent>
 #include "actor.h"
+#include "weapon.h"
 
 class Player : public QObject,public Actor
 {
@@ -15,6 +16,7 @@ private:
     QTimer* fastTimer;
     //Timer used for staggered actions that should be continous
     QTimer* slowTimer;
+    Weapon* equippedWeapon;
 
 public:
     Player(double vertexA, double vertexB, double vertexC);
