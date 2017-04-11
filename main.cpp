@@ -11,10 +11,10 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    State* testingEnviron = new State(800,600);
+    State* testingEnviron = new State(1920,1080);
 
     //Create Player
-    Player* player = new Player(-10,-10,10);
+    Player* player = new Player(-15,-85,15);
 
     //Add Player To Scene
     testingEnviron->addItem(player);

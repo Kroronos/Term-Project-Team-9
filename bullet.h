@@ -15,6 +15,7 @@ private:
     double yMove;
 public:
     Bullet(bool playerMade, double xMove, double yMove);
+    Bullet(bool playerMade, double x, double y, double distortion);
 
 public slots:
     void move();

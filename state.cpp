@@ -12,6 +12,8 @@ State::State(int x, int y)
 
     xDimension=x;
     yDimension=y;
+
+    calculateDistortion();
 }
 
 void State::setSceneInView()
@@ -31,16 +33,29 @@ void State::showView()
     sView->setFixedSize(xDimension, yDimension);
 }
 
+//Add any item to scene
 void State::addItem(QGraphicsItem* item)
 {
     sScene->addItem(item);
 }
 
+//Specific to add player to scene
 void State::addItem(Player *player)
 {
     sScene->addItem(player);
     //Center player in screen
     //TODO Make dynamic ie no hard coding pxl
-    player->setPos(sView->width()/2 +90, sView->height()+100);
+    player->setPos(xDimension/2 + (player->getWidth()), yDimension - (player->getHeight()));
 
+}
+
+void State::calculateDistortion()
+{
+    //calculates by y-value
+    distortion = yDimension/1920;
+}
+
+double State::getDistortion()
+{
+    return distortion;
 }

@@ -14,6 +14,18 @@ Bullet::Bullet(bool playerMade, double x, double y)
     movementTimer->start(50);
 }
 
+Bullet::Bullet(bool playerMade, double x, double y, double distortion)
+    :Actor(-2,-2,2, distortion)
+{
+    movementTimer = new QTimer();
+    connect(movementTimer,SIGNAL(timeout()), this, SLOT(move()));
+    this->playerMade = playerMade;
+    xMove = x * distortion;
+    yMove = y * distortion;
+
+    movementTimer->start(50);
+}
+
 void Bullet::move()
 {
     //Move away from player
