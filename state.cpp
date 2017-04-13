@@ -13,7 +13,7 @@ State::State(int x, int y)
     xDimension=x;
     yDimension=y;
 
-    calculateDistortion();
+    calculateScaling();
 }
 
 void State::setSceneInView()
@@ -49,13 +49,13 @@ void State::addItem(Player *player)
 
 }
 
-void State::calculateDistortion()
+void State::calculateScaling()
 {
     //calculates by y-value
-    distortion = yDimension/1920;
+    scaling = double(yDimension)/1080;
 }
 
-double State::getDistortion()
+double State::getScaling()
 {
-    return distortion;
+    return scaling;
 }

@@ -29,12 +29,18 @@ private:
     QTimer* fastTimer;
     //Timer used for staggered actions that should be continous
     QTimer* slowTimer;
+
     Weapon* equippedWeapon;
+    int health = 5;
 
 public:
-    Player(double vertexA, double vertexB, double vertexC);
-    //Overloaded constructor with distortion included
-    Player(double vertexA, double vertexB, double vertexC, double distortion);
+    //Triangle Constructor
+    Player(double vertexA, double vertexB, double vertexC, double scaling);
+    //Rectangle Constructor
+    Player(double vertexA, double vertexB, double scaling);
+    //Circle Constructor
+    Player(double radius, double scaling);
+
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
@@ -49,6 +55,9 @@ public:
     void setMoveRight2(Qt::Key a);
 
     void setShoot(Qt::Key a);
+
+    int getHealth();
+    void setHealth(int a);
 
 public slots:
     void keyPressFastAction();

@@ -14,8 +14,13 @@ private:
     double xMove;
     double yMove;
 public:
-    Bullet(bool playerMade, double xMove, double yMove);
-    Bullet(bool playerMade, double x, double y, double distortion);
+    //Create normal circular bullet
+    Bullet(bool playerMade, double x, double y, double size, double scaling);
+
+    //Create rectangular bullet, for lasers
+    Bullet(bool playerMade, double width, double height, double scaling);
+
+    bool getPlayerMade();
 
 public slots:
     void move();

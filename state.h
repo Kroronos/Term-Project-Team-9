@@ -12,7 +12,7 @@ private:
     int xDimension;
     int yDimension;
     //fractional difference betweeen 1920 and current resolution
-    int distortion;
+    int scaling;
 public:
     QGraphicsScene* sScene;
     QGraphicsView* sView;
@@ -26,8 +26,8 @@ public:
     //Overloaded: addsPlayer, sets player at appropriate starting position
     void addItem(Player* player);
     //Calculates how much pixel by pixel, the scene varies from 1920 by 1080 dev environment
-    void calculateDistortion();
-    double getDistortion();
+    void calculateScaling();
+    double getScaling();
 };
 
 #endif // STATE_H

@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QDebug>
 #include <QGraphicsScene>
 #include <QGraphicsPolygonItem>
 #include <QGraphicsView>
@@ -14,7 +15,7 @@ int main(int argc, char *argv[])
     State* testingEnviron = new State(1920,1080);
 
     //Create Player
-    Player* player = new Player(-15,-85,15);
+    Player* player = new Player(-15, -85, 15, testingEnviron->getScaling());
 
     //Add Player To Scene
     testingEnviron->addItem(player);

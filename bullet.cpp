@@ -2,28 +2,28 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
-Bullet::Bullet(bool playerMade, double x, double y)
-    :Actor(-2,-2,2)
+Bullet::Bullet(bool playerMade, double x, double y, double size, double scaling)
+    :Actor(size, scaling)
 {
     movementTimer = new QTimer();
     connect(movementTimer,SIGNAL(timeout()), this, SLOT(move()));
     this->playerMade = playerMade;
-    xMove = x;
-    yMove = y;
+    xMove = x * getScaling();
+    yMove = y * getScaling();
 
     movementTimer->start(50);
 }
 
-Bullet::Bullet(bool playerMade, double x, double y, double distortion)
-    :Actor(-2,-2,2, distortion)
+Bullet::Bullet(bool playerMade, double width, double height, double scaling)
+    :Actor(width, height, scaling)
 {
     movementTimer = new QTimer();
     connect(movementTimer,SIGNAL(timeout()), this, SLOT(move()));
     this->playerMade = playerMade;
-    xMove = x * distortion;
-    yMove = y * distortion;
+    xMove = 0 * getScaling();
+    yMove = 10 * getScaling();
 
-    movementTimer->start(50);
+    movementTimer->start(55);
 }
 
 void Bullet::move()
@@ -46,4 +46,8 @@ void Bullet::move()
            delete this;
        }
     }
+}
+bool Bullet::getPlayerMade()
+{
+    return playerMade;
 }

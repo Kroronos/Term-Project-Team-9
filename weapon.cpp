@@ -6,8 +6,12 @@
 #include <QObject>
 #include <QGraphicsView>
 
-Weapon::Weapon(int rate,Player* owner)
+Weapon::Weapon(int rate,Player* owner, double bulletSize, double scaling)
 {
+    qDebug() << "We are here 1";
+    this->scaling = scaling;
+    this->bulletSize = bulletSize;
+    isLaser = false;
     canSpread = false;
     canFire = false;
     this->owner = owner;
@@ -21,8 +25,12 @@ Weapon::Weapon(int rate,Player* owner)
     fireRate-> start(rate);
 }
 
-Weapon::Weapon(int rate, Player *owner, int pellets)
+Weapon::Weapon(int rate, Player *owner,double bulletSize, int pellets, double scaling)
 {
+    qDebug() << "We are here 2";
+    this->scaling = scaling;
+    this->bulletSize = bulletSize;
+    isLaser = false;
     canSpread = true;
     canFire = false;
     numberOfPellets = pellets;
@@ -35,6 +43,23 @@ Weapon::Weapon(int rate, Player *owner, int pellets)
 
     //Set interval based on rate
     fireRate-> start(rate);
+}
+
+Weapon::Weapon(Player* owner, double bulletSize, double scaling) {
+    this->scaling = scaling;
+    this->bulletSize = bulletSize;
+    isLaser = true;
+    canSpread = false;
+    canFire = false;
+    this->owner = owner;
+    //Initialize timer
+    fireRate = new QTimer();
+
+    //connect timer to respective slots
+    connect(fireRate,SIGNAL(timeout()), this, SLOT(shoot()));
+
+    //Set laser interval
+    fireRate->start(50);
 }
 
 bool Weapon::getCanFire()
@@ -50,13 +75,22 @@ void Weapon::setCanFire(bool a)
 void Weapon::shoot()
 {
     if(canFire && !canSpread) {
-        Bullet* playerBullet = new Bullet(true, 0, 10);
-        //hard-coded set pos, make dynamic based on player size
-        owner->scene()->addItem(playerBullet);
-        playerBullet->setPos(owner->x(),owner->y()-owner->getHeight());
+        Bullet* playerBullet;
+        if(!isLaser) {
+            playerBullet = new Bullet(true, 0, 10, bulletSize, scaling);
+            owner->scene()->addItem(playerBullet);
+            playerBullet->setPos(owner->x(),owner->y()-owner->getHeight());
+        }
+        if(isLaser) {
+            playerBullet = new Bullet(true, bulletSize,1920 - owner->y(), scaling);
+            owner->scene()->addItem(playerBullet);
+            playerBullet->setPos(owner->x() - playerBullet->getWidth()/4,owner->y()-(owner->getHeight() + playerBullet->getHeight()));
+        }
+
 
     }
     if(canFire && canSpread) {
+        qDebug() << "AM I HERE?";
         //Even Number Of Pellets
         int middle = numberOfPellets/2;
         if(numberOfPellets % 2 == 0) {
@@ -65,8 +99,8 @@ void Weapon::shoot()
 
                 //x-Direction function of number of pellet
                 //Spreading weapons are faster than normal
-                Bullet* playerBullet = new Bullet(true, xDirection, 20);
-                Bullet* playerBulletComp = new Bullet(true, -xDirection, 20);
+                Bullet* playerBullet = new Bullet(true, xDirection, 20, bulletSize, scaling);
+                Bullet* playerBulletComp = new Bullet(true, -xDirection, 20, bulletSize, scaling);
 
                 owner->scene()->addItem(playerBullet);
                 owner->scene()->addItem(playerBulletComp);
@@ -83,8 +117,8 @@ void Weapon::shoot()
                 if(i < middle) {
                     //x-Direction function of number of pellet
                     //Spreading weapons are faster than normal
-                    Bullet* playerBullet = new Bullet(true, xDirection, 20);
-                    Bullet* playerBulletComp = new Bullet(true, -xDirection, 20);
+                    Bullet* playerBullet = new Bullet(true, xDirection, 20, bulletSize, scaling);
+                    Bullet* playerBulletComp = new Bullet(true, -xDirection, 20, bulletSize, scaling);
 
                     owner->scene()->addItem(playerBullet);
                     owner->scene()->addItem(playerBulletComp);
@@ -94,7 +128,7 @@ void Weapon::shoot()
                 if (i == middle) {
                     //x-Direction function of number of pellet
                     //Spreading weapons are faster than normal
-                    Bullet* playerBullet = new Bullet(true, 0, 20);
+                    Bullet* playerBullet = new Bullet(true, 0, 20, bulletSize, scaling);
 
                     owner->scene()->addItem(playerBullet);
                     playerBullet->setPos(owner->x(),owner->y()-owner->getHeight());

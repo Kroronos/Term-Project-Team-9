@@ -8,35 +8,9 @@
 #include <QTimer>
 #include <QTimerEvent>
 
-Player::Player(double vertexA, double vertexB, double vertexC)
-    : Actor(vertexA, vertexB, vertexC)
-{
-
-    //Makes Player allowed to become focusable
-    setFlag(QGraphicsItem::ItemIsFocusable);
-    //Allows Player to receive input
-    setFocus();
-
-    //Initialize timers
-    fastTimer = new QTimer();
-    slowTimer = new QTimer();
-
-    //Connect timers to respective slots
-    connect(fastTimer,SIGNAL(timeout()), this, SLOT(keyPressFastAction()));
-    connect(slowTimer,SIGNAL(timeout()), this, SLOT(keyPressSlowAction()));
-
-    //Set interval and start timers
-    //50 ms interval for smooth movement NOTE: this should probably be sync to monitor refresh rate instead of being a timer
-    fastTimer-> start(50);
-    //500 ms interval updates every half second
-    slowTimer-> start(500);
-
-    equippedWeapon = new Weapon(500, this, 5);
-}
-
-//Overload with distortion
-Player::Player(double vertexA, double vertexB, double vertexC, double distortion)
-    : Actor(vertexA, vertexB, vertexC, distortion)
+//Player Triangle Constructor
+Player::Player(double vertexA, double vertexB, double vertexC, double scaling)
+    : Actor(vertexA, vertexB, vertexC, scaling)
 {
 
     //Makes Player allowed to become focusable
@@ -58,7 +32,61 @@ Player::Player(double vertexA, double vertexB, double vertexC, double distortion
     //500 ms interval updates every half second
     slowTimer-> start(500);
 
-    equippedWeapon = new Weapon(500, this, 5);
+    equippedWeapon = new Weapon(this, double(5), scaling);
+}
+
+//Player Rectangle Constructor
+Player::Player(double vertexA, double vertexB, double scaling)
+    : Actor(vertexA, vertexB, scaling)
+{
+
+    //Makes Player allowed to become focusable
+    setFlag(QGraphicsItem::ItemIsFocusable);
+    //Allows Player to receive input
+    setFocus();
+
+    //Initialize timers
+    fastTimer = new QTimer();
+    slowTimer = new QTimer();
+
+    //Connect timers to respective slots
+    connect(fastTimer,SIGNAL(timeout()), this, SLOT(keyPressFastAction()));
+    connect(slowTimer,SIGNAL(timeout()), this, SLOT(keyPressSlowAction()));
+
+    //Set interval and start timers
+    //50 ms interval for smooth movement NOTE: this should probably be synch to monitor refresh rate instead of being a timer
+    fastTimer-> start(50);
+    //500 ms interval updates every half second
+    slowTimer-> start(500);
+
+    equippedWeapon = new Weapon(this, double(5), scaling);
+}
+
+//Player Circle Constructor
+Player::Player(double radius, double scaling)
+    : Actor(radius, scaling)
+{
+
+    //Makes Player allowed to become focusable
+    setFlag(QGraphicsItem::ItemIsFocusable);
+    //Allows Player to receive input
+    setFocus();
+
+    //Initialize timers
+    fastTimer = new QTimer();
+    slowTimer = new QTimer();
+
+    //Connect timers to respective slots
+    connect(fastTimer,SIGNAL(timeout()), this, SLOT(keyPressFastAction()));
+    connect(slowTimer,SIGNAL(timeout()), this, SLOT(keyPressSlowAction()));
+
+    //Set interval and start timers
+    //50 ms interval for smooth movement NOTE: this should probably be synch to monitor refresh rate instead of being a timer
+    fastTimer-> start(50);
+    //500 ms interval updates every half second
+    slowTimer-> start(500);
+
+    equippedWeapon = new Weapon(this, double(10), scaling);
 }
 
 //Adds Keys Pressed By Player To A Set
@@ -121,6 +149,16 @@ void Player::setShoot(Qt::Key a)
     shoot = a;
 }
 
+int Player::getHealth()
+{
+    return health;
+}
+
+void Player::setHealth(int a)
+{
+    health = a;
+}
+
 //Acts on a timer interval for each key pressed
 //Increments through every key pressed and performs appropriate actions
 
@@ -139,7 +177,7 @@ void Player::keyPressFastAction()
         if((k == moveLeft || k == moveLeft2) && !hasMovedLeft) {
             //Check to see if player is off screen region
             if(x() - getWidth() >0) {
-                setPos(x()-25*getDistortion(), y());
+                setPos(x()-25*getScaling(), y());
             }
             hasMovedLeft = true;
         }
@@ -147,7 +185,7 @@ void Player::keyPressFastAction()
         if((k == moveRight || k == moveRight2) && !hasMovedRight) {
             //Check to see if player is off screen region
             if(x() + getWidth() < scene()->width()) {
-                setPos(x()+25*getDistortion(), y());
+                setPos(x()+25*getScaling(), y());
             }
             hasMovedRight = true;
         }
@@ -155,7 +193,7 @@ void Player::keyPressFastAction()
         if((k == moveUp || k == moveUp2) && !hasMovedUp) {
             //Check to see if player is off screen region
             if(y()-getHeight() > 0){
-                setPos(x(), y()-25*getDistortion());
+                setPos(x(), y()-25*getScaling());
             }
             hasMovedUp = true;
         }
@@ -163,7 +201,7 @@ void Player::keyPressFastAction()
         if((k == moveDown || k == moveDown2) && !hasMovedDown) {
             //Check to see if player is off screen region
             if(y()+getHeight() < scene()->height()) {
-                setPos(x(), y()+25*getDistortion());
+                setPos(x(), y()+25*getScaling());
             }
             hasMovedDown = true;
         }
