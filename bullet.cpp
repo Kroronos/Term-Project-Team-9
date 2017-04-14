@@ -1,6 +1,11 @@
 #include "bullet.h"
+#include "player.h"
+#include "gameloop.h"
 #include <QGraphicsScene>
 #include <QDebug>
+
+// has access to global variable global game, for collision operations
+extern gameLoop * globalGame;
 
 Bullet::Bullet(bool playerMade, double x, double y, double size, double scaling)
     :Actor(size, scaling)
@@ -28,6 +33,25 @@ Bullet::Bullet(bool playerMade, double width, double height, double scaling)
 
 void Bullet::move()
 {
+    //set containing all collisions
+    collision = collidingItems();
+    //traverse set
+    foreach(QGraphicsItem* c, collision) {
+        if(playerMade) {
+            //check bullet type
+            //if(typeid(*(c)) == typeid(Player)) {
+        }
+        else {
+            if(typeid(*c) == typeid(Player)) {
+                globalGame->player->decrementHealth();
+                scene()-> removeItem(this);
+                delete this;
+                return;
+            }
+        }
+    }
+
+
     //Move away from player
     if(playerMade){
         setPos(x()+xMove,y()-yMove);

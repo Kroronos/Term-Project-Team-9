@@ -4,8 +4,10 @@
 #include <QObject>
 #include <QTimer>
 #include <QTimerEvent>
+#include <QList>
 #include "actor.h"
 #include "weapon.h"
+#include "bullet.h"
 
 class Player : public QObject,public Actor
 {
@@ -30,8 +32,9 @@ private:
     //Timer used for staggered actions that should be continous
     QTimer* slowTimer;
 
-    Weapon* equippedWeapon;
     int health = 5;
+
+    Weapon* equippedWeapon;
 
 public:
     //Triangle Constructor
@@ -44,6 +47,10 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
+    int getHealth();
+    void decrementHealth();
+    void incrementHealth();
+
     void setMoveUp(Qt::Key a);
     void setMoveDown(Qt::Key a);
     void setMoveLeft(Qt::Key a);
@@ -55,9 +62,6 @@ public:
     void setMoveRight2(Qt::Key a);
 
     void setShoot(Qt::Key a);
-
-    int getHealth();
-    void setHealth(int a);
 
 public slots:
     void keyPressFastAction();

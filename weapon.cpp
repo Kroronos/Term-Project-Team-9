@@ -8,7 +8,6 @@
 
 Weapon::Weapon(int rate,Player* owner, double bulletSize, double scaling)
 {
-    qDebug() << "We are here 1";
     this->scaling = scaling;
     this->bulletSize = bulletSize;
     isLaser = false;
@@ -27,7 +26,6 @@ Weapon::Weapon(int rate,Player* owner, double bulletSize, double scaling)
 
 Weapon::Weapon(int rate, Player *owner,double bulletSize, int pellets, double scaling)
 {
-    qDebug() << "We are here 2";
     this->scaling = scaling;
     this->bulletSize = bulletSize;
     isLaser = false;

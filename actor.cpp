@@ -10,7 +10,6 @@ Actor::Actor(double vertexA, double vertexB, double vertexC, double scaling)
 
     //Set scaling
     this->scaling = scaling;
-    qDebug() << scaling;
     //Left Point
     this->vertexA = int(abs(vertexA * scaling));
     //Horizontal

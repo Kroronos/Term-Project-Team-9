@@ -28,13 +28,15 @@ SOURCES += main.cpp \
     actor.cpp \
     player.cpp \
     bullet.cpp \
-    weapon.cpp
+    weapon.cpp \
+    gameloop.cpp
 
 HEADERS  += \
     state.h \
     actor.h \
     player.h \
     bullet.h \
-    weapon.h
+    weapon.h \
+    gameloop.h
 
 FORMS    +=

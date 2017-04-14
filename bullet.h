@@ -3,6 +3,7 @@
 #include "actor.h"
 #include <QtCore>
 #include <QObject>
+#include <QList>
 #include <QTimer>
 
 class Bullet : public QObject, public Actor
@@ -13,6 +14,10 @@ private:
     bool playerMade;
     double xMove;
     double yMove;
+
+    //Stores bullet collsions
+    QList<QGraphicsItem *> collision;
+
 public:
     //Create normal circular bullet
     Bullet(bool playerMade, double x, double y, double size, double scaling);

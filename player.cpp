@@ -154,10 +154,16 @@ int Player::getHealth()
     return health;
 }
 
-void Player::setHealth(int a)
+void Player::decrementHealth()
 {
-    health = a;
+    --health;
 }
+
+void Player::incrementHealth()
+{
+    ++health;
+}
+
 
 //Acts on a timer interval for each key pressed
 //Increments through every key pressed and performs appropriate actions
@@ -165,6 +171,7 @@ void Player::setHealth(int a)
 //Fast actions include movement
 void Player::keyPressFastAction()
 {
+
     //used to control user from inputing both possible move keys to extract double effect
     bool hasMovedLeft = false;
     bool hasMovedRight = false;
