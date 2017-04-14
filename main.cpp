@@ -9,8 +9,10 @@
 #include "player.h"
 #include "bullet.h"
 #include "gameloop.h"
+#include "game.h"
 
 gameLoop * globalGame;
+Game *game;
 
 int main(int argc, char *argv[])
 {
@@ -18,9 +20,11 @@ int main(int argc, char *argv[])
 
     globalGame = new gameLoop(1920, 1080);
     
-    globalGame -> show();
+    game = new Game();
     
-    globalGame -> displayMainMenu();
+    game -> show();
+    
+    game -> displayMainMenu();
 
     return a.exec();
 
