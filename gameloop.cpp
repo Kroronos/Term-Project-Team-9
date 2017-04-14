@@ -1,5 +1,9 @@
 #include "gameloop.h"
 #include "state.h"
+#include "enemy.h"
+
+#include <QObject>
+#include <QTimer>
 
 gameLoop::gameLoop(int x, int y)
     :State(x,y)
@@ -18,16 +22,21 @@ gameLoop::gameLoop(int x, int y)
     setSceneInView();
     showView();
 
-    //Everything after this belongs to you wesley
-    int random_pos = rand() % 700;
-    setPos(random_pos, 0);
+    if(roundcount > 6){
+        //code for the end of the game
+    }
+    else{
+        //Everything after this belongs to you wesley
+        QTimer * roundtimer = new QTimer();
+        QTimer * enemytimer = new QTimer();
 
-    QTimer * roundtimer = new QTimer();
-    QTimer * enemytimer = new QTimer();
+        QObject::connect(enemytimer,SIGNAL(timeout()), enemy, SLOT(spawn()));
+        roundtimer->start(180000); //This sets the round timer to 3 minutes
+        enemytimer->start(5000); //We can adjust this number for difficulty
 
-    QObject::connect(enemytimer, SIGNAL(timeout()), /*enemy (DEFINE)*/ SLOT(/*spawn() (DEFINE)*/));
-    if (roundtimer->timeout()){
-        roundcount++;
-        gameLoop();
+        if (roundtimer->timeout()){
+            roundcount++;
+            gameloop();
+        }
     }
 }
