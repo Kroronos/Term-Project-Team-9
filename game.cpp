@@ -1,6 +1,7 @@
 #include "game.h"
 #include "mainmenu.h"
 #include "gameloop.h"
+#include "health.h"
 #include <QGraphicsTextItem>
 
 
@@ -32,7 +33,7 @@ void Game::start(){
     //clear the screen
     score = 0;
     level = 1;  //start at level 1
-    //health = 3 figure out how to reset health
+    resetHealth();
     scene->clear();
 
     
