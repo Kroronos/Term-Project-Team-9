@@ -56,7 +56,7 @@ void Weapon::shoot()
 
         playerBullet = new Bullet(true, 0, 10, scaling);
         owner->scene()->addItem(playerBullet);
-        playerBullet->setPos(owner->x() + owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
+        playerBullet->setPos(owner->x() + owner->getWidth()/10,owner->y()-owner->getHeight()/8 - owner->getHeight()/7);
     }
 
 
@@ -74,8 +74,8 @@ void Weapon::shoot()
 
                 owner->scene()->addItem(playerBullet);
                 owner->scene()->addItem(playerBulletComp);
-                playerBullet->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
-                playerBulletComp->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
+                playerBullet->setPos(owner->x()+ owner->getWidth()/10,owner->y()-owner->getHeight()/8 - owner->getHeight()/7);
+                playerBulletComp->setPos(owner->x()+ owner->getWidth()/10,owner->y()-owner->getHeight()/8 - owner->getHeight()/7);
 
             }
         }
@@ -92,8 +92,8 @@ void Weapon::shoot()
 
                     owner->scene()->addItem(playerBullet);
                     owner->scene()->addItem(playerBulletComp);
-                    playerBullet->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
-                    playerBulletComp->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
+                    playerBullet->setPos(owner->x()+ owner->getWidth()/10,owner->y()-owner->getHeight()/8 - owner->getHeight()/7);
+                    playerBulletComp->setPos(owner->x()+ owner->getWidth()/10,owner->y()-owner->getHeight()/8 - owner->getHeight()/7);
                 }
                 if (i == middle) {
                     //x-Direction function of number of pellet
@@ -101,7 +101,7 @@ void Weapon::shoot()
                     Bullet* playerBullet = new Bullet(true, 0, 20, scaling);
 
                     owner->scene()->addItem(playerBullet);
-                    playerBullet->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
+                    playerBullet->setPos(owner->x()+ owner->getWidth()/10,owner->y()-owner->getHeight()/8 - owner->getHeight()/7);
                 }
 
             }

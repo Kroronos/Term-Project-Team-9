@@ -133,13 +133,8 @@ void Player::keyPressFastAction()
             if(x()>0) {
                 setPos(x()-25*getScaling(), y());
                 ++movedLeft;
-                if(!(hasMovedLeft)) {
-                    //Change to first left step
-                    timesMovedConsecutivelyInDirection = 0;
-                }
             }
             if(movedLeft >= 1) {
-                ++timesMovedConsecutivelyInDirection;
                 movedRight = 0;
                 movedUp = 0;
                 movedDown = 0;
@@ -179,13 +174,8 @@ void Player::keyPressFastAction()
             if(x() + getWidth() < scene()->width()) {
                 setPos(x()+25*getScaling(), y());
                 ++movedRight;
-                if(!(hasMovedLeft)) {
-                    //Change to first right step
-                    timesMovedConsecutivelyInDirection = 0;
-                }
             }
             if(movedRight >= 1) {
-                ++timesMovedConsecutivelyInDirection;
                 movedLeft = 0;
                 movedUp = 0;
                 movedDown = 0;
@@ -224,18 +214,13 @@ void Player::keyPressFastAction()
             if(y() - getHeight()/8 > 0){
                 setPos(x(), y()-25*getScaling());
                 ++movedUp;
-                if(!(hasMovedLeft || hasMovedRight)) {
-                    //Change to first up step
-                    timesMovedConsecutivelyInDirection = 0;
-                }
             }
             if(movedUp >= 1) {
-                ++timesMovedConsecutivelyInDirection;
                 movedRight = 0;
                 movedLeft = 0;
                 movedDown = 0;
                 if(!(hasMovedLeft || hasMovedRight)) {
-                    switch(moveUp) {
+                    switch(movedUp) {
                     case 1:setPixmap(QPixmap(":/Images/Images/Player_Straight8.png"));
                         break;
                     case 2:setPixmap(QPixmap(":/Images/Images/Player_Straight9.png"));
@@ -257,6 +242,7 @@ void Player::keyPressFastAction()
                     case 10:setPixmap(QPixmap(":/Images/Images/Player_Straight17.png"));
                         break;
                     case 11:setPixmap(QPixmap(":/Images/Images/Player_Straight18.png"));
+                        movedUp = 0;
                         break;
                     }
                 }
@@ -269,16 +255,9 @@ void Player::keyPressFastAction()
             if(y()+getHeight() < scene()->height()) {
                 setPos(x(), y()+25*getScaling());
                 ++movedDown;
-                if(movedDown == 0) {
-                    ++movedDown;
-                    if(!(hasMovedLeft || hasMovedRight)) {
-                        //Change to first down step
-                        timesMovedConsecutivelyInDirection = 0;
-                    }
                 }
                 if(movedDown >= 1) {
                     if(!(hasMovedLeft || hasMovedRight)) {
-                        ++timesMovedConsecutivelyInDirection;
                         movedRight = 0;
                         movedUp = 0;
                         movedLeft = 0;
@@ -303,14 +282,14 @@ void Player::keyPressFastAction()
                             break;
                         case 10:setPixmap(QPixmap(":/Images/Images/Player_Straight17.png"));
                             break;
-                        case 11:setPixmap(QPixmap(":/Images/Images/Player_Straigh18.png"));
+                        case 11:setPixmap(QPixmap(":/Images/Images/Player_Straight18.png"));
+                            movedUp = 0;
                             break;
                         }
                     }
                 }
+                hasMovedDown = true;
             }
-            hasMovedDown = true;
-        }
 
         if(k == shoot){
             equippedWeapon->setCanFire(true);
@@ -323,5 +302,4 @@ void Player::keyPressSlowAction()
 {
 
 }
-
 

@@ -34,11 +34,11 @@ private:
 
     int health = 5;
 
+    //Used to track animation frames for movement
     int movedUp = 0;
     int movedLeft = 0;
     int movedRight = 0;
     int movedDown = 0;
-    int timesMovedConsecutivelyInDirection = 0;
 
     Weapon* equippedWeapon;
 
