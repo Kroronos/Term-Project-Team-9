@@ -23,23 +23,25 @@ Game::Game(QWidget *parent){
     health = new Health();
     health->setPos(health->x(), health->y()+25);
     scene->addItem(health);
-    
+
 }
 
 void Game::start(){
-    gameLoop = new gameLoop(); //connect to start screen for game
+    //Fixed this declaration, might want to make x,y a parameter of start()
+    // gameLoop needs a name and needs to be a pointer for this type of declartion
+    gameLoop * startGame = new gameLoop(1920,1080); //connect to start screen for game
     //clear the screen
     score = 0;
     level = 1;  //start at level 1
-    resetHealth();
+    health->resetHealth();
     scene->clear();
 
-    
+
 }
 
 void Game::replayGame()
 {
-   
+
     scene->clear();
     start();
 }
@@ -54,7 +56,7 @@ void Game::returnToGame(){
     } else {
         timer.start(timeoutTime(), this);
     }
-    update(); 
+    update();
 }
 
 void Game::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
