@@ -10,11 +10,12 @@ Game::Game(QWidget *parent){
     //set up screen
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(1024,768);
+    setFixedSize(1920,1080);
+    showFullScreen();
 
     //set up scene
     scene = new QGraphicsScene();
-    scene->setSceneRect(0, 0, 1024, 768);
+    scene->setSceneRect(0, 0, 1920, 1080);
     setScene(scene);
 
     //create score and health
@@ -34,8 +35,6 @@ void Game::start(){
     score = 0;
     level = 1;  //start at level 1
     health->resetHealth();
-    scene->clear();
-
 
 }
 
