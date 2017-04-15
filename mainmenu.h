@@ -5,7 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QObject>
 
-class mainMenu: public QGraphicsRectItem, public QObject{
+class mainMenu: public QObject, public QGraphicsRectItem{
 
     Q_OBJECT
 public:
