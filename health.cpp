@@ -19,6 +19,10 @@ void Health::decrease(){
 //    }
 }
 
+void Health::resetHealth(){
+    health = 3;
+}
+
 int Health::getHealth(){
     return health;
 }
