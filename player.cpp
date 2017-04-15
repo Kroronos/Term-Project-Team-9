@@ -8,9 +8,9 @@
 #include <QTimer>
 #include <QTimerEvent>
 
-//Player Triangle Constructor
-Player::Player(double vertexA, double vertexB, double vertexC, double scaling)
-    : Actor(vertexA, vertexB, vertexC, scaling)
+//Player Constructor
+Player::Player(const QString &fileName, double scaling)
+    : Actor(fileName, scaling)
 {
 
     //Makes Player allowed to become focusable
@@ -32,61 +32,7 @@ Player::Player(double vertexA, double vertexB, double vertexC, double scaling)
     //500 ms interval updates every half second
     slowTimer-> start(500);
 
-    equippedWeapon = new Weapon(this, double(5), scaling);
-}
-
-//Player Rectangle Constructor
-Player::Player(double vertexA, double vertexB, double scaling)
-    : Actor(vertexA, vertexB, scaling)
-{
-
-    //Makes Player allowed to become focusable
-    setFlag(QGraphicsItem::ItemIsFocusable);
-    //Allows Player to receive input
-    setFocus();
-
-    //Initialize timers
-    fastTimer = new QTimer();
-    slowTimer = new QTimer();
-
-    //Connect timers to respective slots
-    connect(fastTimer,SIGNAL(timeout()), this, SLOT(keyPressFastAction()));
-    connect(slowTimer,SIGNAL(timeout()), this, SLOT(keyPressSlowAction()));
-
-    //Set interval and start timers
-    //50 ms interval for smooth movement NOTE: this should probably be synch to monitor refresh rate instead of being a timer
-    fastTimer-> start(50);
-    //500 ms interval updates every half second
-    slowTimer-> start(500);
-
-    equippedWeapon = new Weapon(this, double(5), scaling);
-}
-
-//Player Circle Constructor
-Player::Player(double radius, double scaling)
-    : Actor(radius, scaling)
-{
-
-    //Makes Player allowed to become focusable
-    setFlag(QGraphicsItem::ItemIsFocusable);
-    //Allows Player to receive input
-    setFocus();
-
-    //Initialize timers
-    fastTimer = new QTimer();
-    slowTimer = new QTimer();
-
-    //Connect timers to respective slots
-    connect(fastTimer,SIGNAL(timeout()), this, SLOT(keyPressFastAction()));
-    connect(slowTimer,SIGNAL(timeout()), this, SLOT(keyPressSlowAction()));
-
-    //Set interval and start timers
-    //50 ms interval for smooth movement NOTE: this should probably be synch to monitor refresh rate instead of being a timer
-    fastTimer-> start(50);
-    //500 ms interval updates every half second
-    slowTimer-> start(500);
-
-    equippedWeapon = new Weapon(this, double(10), scaling);
+    equippedWeapon = new Weapon(500, this, 3, scaling);
 }
 
 //Adds Keys Pressed By Player To A Set
@@ -183,7 +129,7 @@ void Player::keyPressFastAction()
         //Move left
         if((k == moveLeft || k == moveLeft2) && !hasMovedLeft) {
             //Check to see if player is off screen region
-            if(x() - getWidth() >0) {
+            if(x()>0) {
                 setPos(x()-25*getScaling(), y());
             }
             hasMovedLeft = true;
@@ -199,7 +145,7 @@ void Player::keyPressFastAction()
         //Move up
         if((k == moveUp || k == moveUp2) && !hasMovedUp) {
             //Check to see if player is off screen region
-            if(y()-getHeight() > 0){
+            if(y() - getHeight()/8 > 0){
                 setPos(x(), y()-25*getScaling());
             }
             hasMovedUp = true;

@@ -16,20 +16,15 @@ private:
     Player* owner;
     bool canFire;
     bool canSpread;
-    bool isLaser;
     int numberOfPellets;
     double scaling;
-    double bulletSize;
 
 public:
 
-    Weapon(int rate, Player* owner, double bulletSize, double scaling);
+    Weapon(int rate, Player* owner, double scaling);
 
     //Create Spreading Weapon, Overloaded Constructor
-    Weapon(int rate, Player* owner, double bulletSize, int pellets, double scaling);
-
-    //Create Laser Weapon, Overloaded Constructor
-    Weapon(Player* owner, double bulletSize, double scaling);
+    Weapon(int rate, Player* owner, int pellets, double scaling);
 
 
     bool getCanFire();

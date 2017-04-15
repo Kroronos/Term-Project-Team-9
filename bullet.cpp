@@ -7,8 +7,8 @@
 // has access to global variable global game, for collision operations
 extern gameLoop * globalGame;
 
-Bullet::Bullet(bool playerMade, double x, double y, double size, double scaling)
-    :Actor(size, scaling)
+Bullet::Bullet(bool playerMade, double x, double y, double scaling)
+    :Actor(":/Images/Images/Bullet.png", scaling)
 {
     movementTimer = new QTimer();
     connect(movementTimer,SIGNAL(timeout()), this, SLOT(move()));
@@ -17,18 +17,6 @@ Bullet::Bullet(bool playerMade, double x, double y, double size, double scaling)
     yMove = y * getScaling();
 
     movementTimer->start(50);
-}
-
-Bullet::Bullet(bool playerMade, double width, double height, double scaling)
-    :Actor(width, height, scaling)
-{
-    movementTimer = new QTimer();
-    connect(movementTimer,SIGNAL(timeout()), this, SLOT(move()));
-    this->playerMade = playerMade;
-    xMove = 0 * getScaling();
-    yMove = 10 * getScaling();
-
-    movementTimer->start(55);
 }
 
 void Bullet::move()
@@ -40,6 +28,8 @@ void Bullet::move()
         if(playerMade) {
             //check bullet type
             //if(typeid(*(c)) == typeid(Player)) {
+
+            //}
         }
         else {
             if(typeid(*c) == typeid(Player)) {
@@ -56,7 +46,7 @@ void Bullet::move()
     if(playerMade){
         setPos(x()+xMove,y()-yMove);
         //Delete bullets when they leave upper region
-        if(pos().y() < 0 - y()){
+        if(pos().y() < 0 - y() - 2*getHeight()){
             scene()->removeItem(this);
             delete this;
         }
@@ -65,7 +55,7 @@ void Bullet::move()
     else {
        setPos(x()+xMove,y()+yMove);
        //Delete bullets when they leave bottom region
-       if(pos().y() > scene()->height()){
+       if(pos().y() > scene()->height() + 2*getHeight()){
            scene()->removeItem(this);
            delete this;
        }

@@ -9,7 +9,7 @@
 #include "weapon.h"
 #include "bullet.h"
 
-class Player : public QObject,public Actor
+class Player : /*public QObject,*/public Actor
 {
     Q_OBJECT
 private:
@@ -37,12 +37,7 @@ private:
     Weapon* equippedWeapon;
 
 public:
-    //Triangle Constructor
-    Player(double vertexA, double vertexB, double vertexC, double scaling);
-    //Rectangle Constructor
-    Player(double vertexA, double vertexB, double scaling);
-    //Circle Constructor
-    Player(double radius, double scaling);
+    Player::Player(const QString &fileName, double scaling);
 
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);

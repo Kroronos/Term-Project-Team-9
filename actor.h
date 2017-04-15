@@ -1,25 +1,15 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 #include <QtCore>
-#include <QGraphicsPolygonItem>
+#include <QGraphicsPixmapItem>
 
-class Actor: public QGraphicsPolygonItem
+class Actor: public QObject, public QGraphicsPixmapItem
 {
 private:
-    unsigned int vertexA = 0;
-    unsigned int vertexB = 0;
-    unsigned int vertexC = 0;
-    unsigned int vertexD = 0;
     double scaling = 1;
+    QRectF boundingRectRef;
 public:
-    //Constructor for triangle with scaling
-    Actor(double vertexA, double vertexB, double vertexC, double scaling);
-
-    //Constructor for rectangle with scaling
-    Actor(double vertexA, double vertexB, double scaling);
-
-    //Constructor for circle(approximated) with scaling
-    Actor(double radius, double scaling);
+    Actor(const QString &fileName, double scaling);
 
     double getHeight();
     double getWidth();

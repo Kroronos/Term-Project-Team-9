@@ -40,3 +40,6 @@ HEADERS  += \
     gameloop.h
 
 FORMS    +=
+
+RESOURCES += \
+    images.qrc

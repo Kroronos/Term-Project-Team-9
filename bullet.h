@@ -6,7 +6,7 @@
 #include <QList>
 #include <QTimer>
 
-class Bullet : public QObject, public Actor
+class Bullet : /*public QObject,*/ public Actor
 {
     Q_OBJECT
 private:
@@ -20,10 +20,7 @@ private:
 
 public:
     //Create normal circular bullet
-    Bullet(bool playerMade, double x, double y, double size, double scaling);
-
-    //Create rectangular bullet, for lasers
-    Bullet(bool playerMade, double width, double height, double scaling);
+    Bullet(bool playerMade, double x, double y, double scaling);
 
     bool getPlayerMade();
 

@@ -45,7 +45,7 @@ void State::addItem(Player *player)
     sScene->addItem(player);
     //Center player in screen
     //TODO Make dynamic ie no hard coding pxl
-    player->setPos(xDimension/2 + (player->getWidth()), yDimension - (player->getHeight()));
+    player->setPos(xDimension/2, yDimension - 1.1*(player->getHeight()));
 
 }
 

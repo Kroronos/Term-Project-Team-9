@@ -6,11 +6,9 @@
 #include <QObject>
 #include <QGraphicsView>
 
-Weapon::Weapon(int rate,Player* owner, double bulletSize, double scaling)
+Weapon::Weapon(int rate,Player* owner, double scaling)
 {
     this->scaling = scaling;
-    this->bulletSize = bulletSize;
-    isLaser = false;
     canSpread = false;
     canFire = false;
     this->owner = owner;
@@ -24,11 +22,9 @@ Weapon::Weapon(int rate,Player* owner, double bulletSize, double scaling)
     fireRate-> start(rate);
 }
 
-Weapon::Weapon(int rate, Player *owner,double bulletSize, int pellets, double scaling)
+Weapon::Weapon(int rate, Player *owner, int pellets, double scaling)
 {
     this->scaling = scaling;
-    this->bulletSize = bulletSize;
-    isLaser = false;
     canSpread = true;
     canFire = false;
     numberOfPellets = pellets;
@@ -41,23 +37,6 @@ Weapon::Weapon(int rate, Player *owner,double bulletSize, int pellets, double sc
 
     //Set interval based on rate
     fireRate-> start(rate);
-}
-
-Weapon::Weapon(Player* owner, double bulletSize, double scaling) {
-    this->scaling = scaling;
-    this->bulletSize = bulletSize;
-    isLaser = true;
-    canSpread = false;
-    canFire = false;
-    this->owner = owner;
-    //Initialize timer
-    fireRate = new QTimer();
-
-    //connect timer to respective slots
-    connect(fireRate,SIGNAL(timeout()), this, SLOT(shoot()));
-
-    //Set laser interval
-    fireRate->start(50);
 }
 
 bool Weapon::getCanFire()
@@ -74,21 +53,14 @@ void Weapon::shoot()
 {
     if(canFire && !canSpread) {
         Bullet* playerBullet;
-        if(!isLaser) {
-            playerBullet = new Bullet(true, 0, 10, bulletSize, scaling);
-            owner->scene()->addItem(playerBullet);
-            playerBullet->setPos(owner->x(),owner->y()-owner->getHeight());
-        }
-        if(isLaser) {
-            playerBullet = new Bullet(true, bulletSize,1920 - owner->y(), scaling);
-            owner->scene()->addItem(playerBullet);
-            playerBullet->setPos(owner->x() - playerBullet->getWidth()/4,owner->y()-(owner->getHeight() + playerBullet->getHeight()));
-        }
 
-
+        playerBullet = new Bullet(true, 0, 10, scaling);
+        owner->scene()->addItem(playerBullet);
+        playerBullet->setPos(owner->x() + owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
     }
+
+
     if(canFire && canSpread) {
-        qDebug() << "AM I HERE?";
         //Even Number Of Pellets
         int middle = numberOfPellets/2;
         if(numberOfPellets % 2 == 0) {
@@ -97,13 +69,13 @@ void Weapon::shoot()
 
                 //x-Direction function of number of pellet
                 //Spreading weapons are faster than normal
-                Bullet* playerBullet = new Bullet(true, xDirection, 20, bulletSize, scaling);
-                Bullet* playerBulletComp = new Bullet(true, -xDirection, 20, bulletSize, scaling);
+                Bullet* playerBullet = new Bullet(true, xDirection, 20, scaling);
+                Bullet* playerBulletComp = new Bullet(true, -xDirection, 20, scaling);
 
                 owner->scene()->addItem(playerBullet);
                 owner->scene()->addItem(playerBulletComp);
-                playerBullet->setPos(owner->x(),owner->y()-owner->getHeight());
-                playerBulletComp->setPos(owner->x(),owner->y()-owner->getHeight());
+                playerBullet->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
+                playerBulletComp->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
 
             }
         }
@@ -115,21 +87,21 @@ void Weapon::shoot()
                 if(i < middle) {
                     //x-Direction function of number of pellet
                     //Spreading weapons are faster than normal
-                    Bullet* playerBullet = new Bullet(true, xDirection, 20, bulletSize, scaling);
-                    Bullet* playerBulletComp = new Bullet(true, -xDirection, 20, bulletSize, scaling);
+                    Bullet* playerBullet = new Bullet(true, xDirection, 20, scaling);
+                    Bullet* playerBulletComp = new Bullet(true, -xDirection, 20, scaling);
 
                     owner->scene()->addItem(playerBullet);
                     owner->scene()->addItem(playerBulletComp);
-                    playerBullet->setPos(owner->x(),owner->y()-owner->getHeight());
-                    playerBulletComp->setPos(owner->x(),owner->y()-owner->getHeight());
+                    playerBullet->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
+                    playerBulletComp->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
                 }
                 if (i == middle) {
                     //x-Direction function of number of pellet
                     //Spreading weapons are faster than normal
-                    Bullet* playerBullet = new Bullet(true, 0, 20, bulletSize, scaling);
+                    Bullet* playerBullet = new Bullet(true, 0, 20, scaling);
 
                     owner->scene()->addItem(playerBullet);
-                    playerBullet->setPos(owner->x(),owner->y()-owner->getHeight());
+                    playerBullet->setPos(owner->x()+ owner->getWidth()/7,owner->y()-owner->getHeight()/8 - owner->getHeight()/4);
                 }
 
             }
