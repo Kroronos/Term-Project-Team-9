@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QTimerEvent>
+#include <QGraphicsPixmapItem>
 
 //Player Constructor
 Player::Player(const QString &fileName, double scaling)
@@ -145,27 +146,27 @@ void Player::keyPressFastAction()
                 if(!(hasMovedRight)) {
                     switch(movedLeft)
                     {
-                        case 1:
+                        case 1: setPixmap(QPixmap(":/Images/Images/Player_Turn_Left1.png"));
                             break;
-                        case 2:
+                        case 2:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left2.png"));
                             break;
-                        case 3:
+                        case 3:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left3.png"));
                             break;
-                        case 4:
+                        case 4:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left4.png"));
                             break;
-                        case 5:
+                        case 5:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left5.png"));
                             break;
-                        case 6:
+                        case 6:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left6.png"));
                             break;
-                        case 7:
+                        case 7:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left7.png"));
                             break;
-                        case 8:
+                        case 8:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left8.png"));
                             break;
-                        case 9:
+                        case 9:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left9.png"));
                             break;
-                        case 10:
+                        case 10:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left10.png"));
                             break;
-                        case 11:
+                        case 11:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left11.png"));
                             break;
                     }
                 }
@@ -189,28 +190,28 @@ void Player::keyPressFastAction()
                 movedUp = 0;
                 movedDown = 0;
                 if(!(hasMovedLeft)) {
-                    switch(movedDown) {
-                    case 1:
+                    switch(movedRight) {
+                    case 1:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right1.png"));
                         break;
-                    case 2:
+                    case 2:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right2.png"));
                         break;
-                    case 3:
+                    case 3:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right3.png"));
                         break;
-                    case 4:
+                    case 4:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right4.png"));
                         break;
-                    case 5:
+                    case 5:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right5.png"));
                         break;
-                    case 6:
+                    case 6:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right6.png"));
                         break;
-                    case 7:
+                    case 7:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right7.png"));
                         break;
-                    case 8:
+                    case 8:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right8.png"));
                         break;
-                    case 9:
+                    case 9:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right9.png"));
                         break;
-                    case 10:
+                    case 10:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right10.png"));
                         break;
-                    case 11:
+                    case 11:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right11.png"));
                         break;
                     }
                 }
@@ -235,27 +236,27 @@ void Player::keyPressFastAction()
                 movedDown = 0;
                 if(!(hasMovedLeft || hasMovedRight)) {
                     switch(moveUp) {
-                    case 1:
+                    case 1:setPixmap(QPixmap(":/Images/Images/Player_Straight8.png"));
                         break;
-                    case 2:
+                    case 2:setPixmap(QPixmap(":/Images/Images/Player_Straight9.png"));
                         break;
-                    case 3:
+                    case 3:setPixmap(QPixmap(":/Images/Images/Player_Straight10.png"));
                         break;
-                    case 4:
+                    case 4:setPixmap(QPixmap(":/Images/Images/Player_Straight11.png"));
                         break;
-                    case 5:
+                    case 5:setPixmap(QPixmap(":/Images/Images/Player_Straight12.png"));
                         break;
-                    case 6:
+                    case 6:setPixmap(QPixmap(":/Images/Images/Player_Straight13.png"));
                         break;
-                    case 7:
+                    case 7:setPixmap(QPixmap(":/Images/Images/Player_Straight14.png"));
                         break;
-                    case 8:
+                    case 8:setPixmap(QPixmap(":/Images/Images/Player_Straight15.png"));
                         break;
-                    case 9:
+                    case 9:setPixmap(QPixmap(":/Images/Images/Player_Straight16.png"));
                         break;
-                    case 10:
+                    case 10:setPixmap(QPixmap(":/Images/Images/Player_Straight17.png"));
                         break;
-                    case 11:
+                    case 11:setPixmap(QPixmap(":/Images/Images/Player_Straight18.png"));
                         break;
                     }
                 }
@@ -267,6 +268,7 @@ void Player::keyPressFastAction()
             //Check to see if player is off screen region
             if(y()+getHeight() < scene()->height()) {
                 setPos(x(), y()+25*getScaling());
+                ++movedDown;
                 if(movedDown == 0) {
                     ++movedDown;
                     if(!(hasMovedLeft || hasMovedRight)) {
@@ -281,27 +283,27 @@ void Player::keyPressFastAction()
                         movedUp = 0;
                         movedLeft = 0;
                         switch(movedDown) {
-                        case 1:
+                        case 1:setPixmap(QPixmap(":/Images/Images/Player_Straight8.png"));
                             break;
-                        case 2:
+                        case 2:setPixmap(QPixmap(":/Images/Images/Player_Straight9.png"));
                             break;
-                        case 3:
+                        case 3:setPixmap(QPixmap(":/Images/Images/Player_Straight10.png"));
                             break;
-                        case 4:
+                        case 4:setPixmap(QPixmap(":/Images/Images/Player_Straight11.png"));
                             break;
-                        case 5:
+                        case 5:setPixmap(QPixmap(":/Images/Images/Player_Straight12.png"));
                             break;
-                        case 6:
+                        case 6:setPixmap(QPixmap(":/Images/Images/Player_Straight13.png"));
                             break;
-                        case 7:
+                        case 7:setPixmap(QPixmap(":/Images/Images/Player_Straight14.png"));
                             break;
-                        case 8:
+                        case 8:setPixmap(QPixmap(":/Images/Images/Player_Straight15.png"));
                             break;
-                        case 9:
+                        case 9:setPixmap(QPixmap(":/Images/Images/Player_Straight16.png"));
                             break;
-                        case 10:
+                        case 10:setPixmap(QPixmap(":/Images/Images/Player_Straight17.png"));
                             break;
-                        case 11:
+                        case 11:setPixmap(QPixmap(":/Images/Images/Player_Straigh18.png"));
                             break;
                         }
                     }
