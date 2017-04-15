@@ -23,9 +23,7 @@ Game::Game(QWidget *parent){
     health = new Health();
     health->setPos(health->x(), health->y()+25);
     scene->addItem(health);
-    if (health == 0){ //check if in right location
-        gameOver();
-    }
+    
 }
 
 void Game::start(){
@@ -41,9 +39,7 @@ void Game::start(){
 
 void Game::replayGame()
 {
-    //clear score and health then call start()
-    score=0;
-    //health->clear();
+   
     scene->clear();
     start();
 }
