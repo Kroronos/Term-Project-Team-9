@@ -2,6 +2,9 @@
 #include "state.h"
 #include "enemy.h"
 #include "player.h"
+#include "game.h"
+#include "score.h"
+#include "health.h"
 
 #include <QObject>
 #include <QTimer>
@@ -11,7 +14,7 @@
 #include <QGraphicsObject>
 #include <QGraphicsScene>
 
-
+extern Game * game;
 gameLoop::gameLoop(int x, int y)
     :State(x,y)
 {
@@ -26,6 +29,13 @@ gameLoop::gameLoop(int x, int y)
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     //Allows Player to receive input
     player->setFocus();
+        
+     //creating score and health
+    score = new Score();
+    sScene->addItem(score);
+    health = new Health();
+    health->setPos(health->x(), health->y()+25);
+    sScene->addItem(health);
 
     setSceneInView();
     showView();
