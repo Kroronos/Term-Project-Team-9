@@ -34,10 +34,16 @@ private:
 
     int health = 5;
 
+    int movedUp = 0;
+    int movedLeft = 0;
+    int movedRight = 0;
+    int movedDown = 0;
+    int timesMovedConsecutivelyInDirection = 0;
+
     Weapon* equippedWeapon;
 
 public:
-    Player::Player(const QString &fileName, double scaling);
+    Player(const QString &fileName, double scaling);
 
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);

@@ -131,6 +131,33 @@ void Player::keyPressFastAction()
             //Check to see if player is off screen region
             if(x()>0) {
                 setPos(x()-25*getScaling(), y());
+                ++movedLeft;
+                if(!(hasMovedLeft)) {
+                    //Change to first left step
+                    timesMovedConsecutivelyInDirection = 0;
+                }
+            }
+            if(movedLeft >= 1) {
+                ++timesMovedConsecutivelyInDirection;
+                movedRight = 0;
+                movedUp = 0;
+                movedDown = 0;
+                if(!(hasMovedRight)) {
+                    switch(movedLeft) {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                    }
+                }
+            }
             }
             hasMovedLeft = true;
         }
@@ -139,6 +166,32 @@ void Player::keyPressFastAction()
             //Check to see if player is off screen region
             if(x() + getWidth() < scene()->width()) {
                 setPos(x()+25*getScaling(), y());
+                ++movedRight;
+                if(!(hasMovedLeft)) {
+                    //Change to first right step
+                    timesMovedConsecutivelyInDirection = 0;
+                }
+            }
+            if(movedRight >= 1) {
+                ++timesMovedConsecutivelyInDirection;
+                movedLeft = 0;
+                movedUp = 0;
+                movedDown = 0;
+                if(!(hasMovedLeft)) {
+                    switch(movedDown) {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                    }
+                }
             }
             hasMovedRight = true;
         }
@@ -147,6 +200,29 @@ void Player::keyPressFastAction()
             //Check to see if player is off screen region
             if(y() - getHeight()/8 > 0){
                 setPos(x(), y()-25*getScaling());
+                ++movedUp;
+                if(!(hasMovedLeft || hasMovedRight)) {
+                    //Change to first up step
+                    timesMovedConsecutivelyInDirection = 0;
+                }
+            }
+            if(movedUp >= 1) {
+                ++timesMovedConsecutivelyInDirection;
+                movedRight = 0;
+                movedLeft = 0;
+                movedDown = 0;
+                if(!(hasMovedLeft || hasMovedRight)) {
+                    switch(moveUp) {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                    }
+                }
             }
             hasMovedUp = true;
         }
@@ -155,6 +231,33 @@ void Player::keyPressFastAction()
             //Check to see if player is off screen region
             if(y()+getHeight() < scene()->height()) {
                 setPos(x(), y()+25*getScaling());
+                if(movedDown == 0) {
+                    ++movedDown;
+                    if(!(hasMovedLeft || hasMovedRight)) {
+                        //Change to first down step
+                        timesMovedConsecutivelyInDirection = 0;
+                    }
+                }
+                if(movedDown >= 1) {
+                    if(!(hasMovedLeft || hasMovedRight)) {
+                        ++timesMovedConsecutivelyInDirection;
+                        movedRight = 0;
+                        movedUp = 0;
+                        movedLeft = 0;
+                        switch(movedDown) {
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 7:
+                            case 8:
+                            case 9:
+                            case 10:
+                        }
+                    }
+                }
             }
             hasMovedDown = true;
         }
