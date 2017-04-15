@@ -12,6 +12,9 @@ State::State(int x, int y)
 
     xDimension=x;
     yDimension=y;
+    if(x == 1920 && y == 1080) {
+        sView->showFullScreen();
+    }
 
     calculateScaling();
 }

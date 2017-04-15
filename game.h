@@ -11,6 +11,7 @@
 #include "mainmenu.h"
 #include "score.h"
 #include "health.h"
+#include "gameloop.h"
 
 class Game: public QGraphicsView{
     Q_OBJECT
@@ -33,6 +34,9 @@ public:
 
     //pointer for health
     Health * health;
+
+    //global game accesor
+    gameLoop * startGame;
 
 
 

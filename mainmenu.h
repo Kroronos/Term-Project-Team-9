@@ -6,7 +6,6 @@
 #include <QObject>
 
 class mainMenu: public QObject, public QGraphicsRectItem{
-
     Q_OBJECT
 public:
     //constructors

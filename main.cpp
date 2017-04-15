@@ -19,12 +19,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    globalGame = new gameLoop(1920, 1080);
-    
     game = new Game();
-    
+
+    game->startGame = globalGame;
+
     game->show();
-    
+
     game->displayMainMenu();
 
     return a.exec();

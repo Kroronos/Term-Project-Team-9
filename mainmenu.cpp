@@ -42,5 +42,27 @@ void mainMenu::hoverLeaveEvent(QGraphicsSceneHoverEvent *event){
     setBrush(brush);
 }
 
+void mainMenu::start()
+{
 
+}
 
+void mainMenu::close()
+{
+
+}
+
+void mainMenu::displayPauseMenu()
+{
+
+}
+
+void mainMenu::returnToGame()
+{
+
+}
+
+void mainMenu::replayGame()
+{
+
+}
