@@ -1,5 +1,6 @@
 #include "game.h"
 #include "mainmenu.h"
+#include "gameloop.h"
 #include <QGraphicsTextItem>
 
 
@@ -27,13 +28,14 @@ Game::Game(QWidget *parent){
 }
 
 void Game::start(){
+    gameLoop = new gameLoop(); //connect to start screen for game
     //clear the screen
     score = 0;
-    level = 1;  //make sure we have function that adjusts levels
+    level = 1;  //start at level 1
     //health = 3 figure out how to reset health
     scene->clear();
 
-    //still need to connect to play screen
+    
 }
 
 void Game::replayGame()
@@ -46,7 +48,7 @@ void Game::replayGame()
 }
 
 void Game::returnToGame(){
-    //figure out code to return to game
+    //pause menu return to game
     if (!isStarted)
         return;
     isPaused = !isPaused;
@@ -55,7 +57,7 @@ void Game::returnToGame(){
     } else {
         timer.start(timeoutTime(), this);
     }
-    update(); //figure out what this function does
+    update(); 
 }
 
 void Game::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
