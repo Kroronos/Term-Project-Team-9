@@ -8,8 +8,9 @@
 #include "actor.h"
 #include "weapon.h"
 #include "bullet.h"
+#include "health.h"
 
-class Player : /*public QObject,*/public Actor
+class Player : public Actor
 {
     Q_OBJECT
 private:
@@ -32,13 +33,16 @@ private:
     //Timer used for staggered actions that should be continous
     QTimer* slowTimer;
 
-    int health = 5;
+    Health* health;
 
     //Used to track animation frames for movement
     int movedUp = 0;
     int movedLeft = 0;
     int movedRight = 0;
     int movedDown = 0;
+
+    //personal scaling modifer (used to change picture to manageable size)
+    double scaling;
 
     Weapon* equippedWeapon;
 

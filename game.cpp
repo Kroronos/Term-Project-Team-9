@@ -4,7 +4,7 @@
 #include "health.h"
 #include <QGraphicsTextItem>
 
-
+extern gameLoop * globalGame;
 
 Game::Game(QWidget *parent){
     //set up screen
@@ -31,7 +31,7 @@ void Game::start(){
     //Fixed this declaration, might want to make x,y a parameter of start()
     // gameLoop needs a name and needs to be a pointer for this type of declartion
     startGame = new gameLoop(1920,1080); //connect to start screen for game
-    //clear the screen
+    globalGame = startGame;
     score = 0;
     level = 1;  //start at level 1
     health->resetHealth();

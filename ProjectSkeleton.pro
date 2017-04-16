@@ -29,7 +29,15 @@ SOURCES += main.cpp \
     player.cpp \
     bullet.cpp \
     weapon.cpp \
-    gameloop.cpp
+    gameloop.cpp \
+    health.cpp \
+    score.cpp \
+    mainmenu.cpp \
+    enemy.cpp \
+    enemyone.cpp \
+    enemytwo.cpp \
+    enemythree.cpp \
+    enemyfour.cpp
 
 HEADERS  += \
     state.h \
@@ -37,7 +45,15 @@ HEADERS  += \
     player.h \
     bullet.h \
     weapon.h \
-    gameloop.h
+    gameloop.h \
+    health.h \
+    score.h \
+    mainmenu.h \
+    enemy.h \
+    enemyone.h \
+    enemytwo.h \
+    enemythree.h \
+    enemyfour.h
 
 FORMS    +=
 
