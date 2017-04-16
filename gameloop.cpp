@@ -2,9 +2,6 @@
 #include "state.h"
 #include "enemy.h"
 #include "player.h"
-#include "game.h"
-#include "score.h"
-#include "health.h"
 
 #include <QObject>
 #include <QTimer>
@@ -14,7 +11,7 @@
 #include <QGraphicsObject>
 #include <QGraphicsScene>
 
-extern Game * game;
+
 gameLoop::gameLoop(int x, int y)
     :State(x,y)
 {
@@ -29,34 +26,28 @@ gameLoop::gameLoop(int x, int y)
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     //Allows Player to receive input
     player->setFocus();
-    
-     Game::Game(QWidget *parent){
-     //creating score and health
-    score = new Score();
-    sScene->addItem(score);
-    health = new Health();
-    health->setPos(health->x(), health->y()+25);
-    sScene->addItem(health);
-     }
+
+    Game::Game(QWidget *parent){
+    //creating score and health
+   score = new Score();
+   sScene->addItem(score);
+   health = new Health();
+   health->setPos(health->x(), health->y()+25);
+   sScene->addItem(health);
+    }
 
     setSceneInView();
     showView();
 
-    if(roundcount > 6){
-        //code for the end of the game
-    }
-    else{
 
-        //Everything after this belongs to you wesley
-        QTimer *roundtimer = new QTimer();
-        QTimer *enemytimer = new QTimer();
+    //Everything after this belongs to you wesley
+    QTimer *roundtimer = new QTimer();
+    QTimer *enemytimer = new QTimer();
 
-        QObject::connect(enemytimer,SIGNAL(timeout()), this, SLOT(spawn()));
-        QObject::connect(roundtimer,SIGNAL(timeout()), this, SLOT(nextround()));
-        roundtimer->start(180000); //This sets the round timer to 3 minutes
-        enemytimer->start(5000); //We can adjust this number for difficulty
-
-    }
+    QObject::connect(enemytimer,SIGNAL(timeout()), this, SLOT(spawn()));
+    QObject::connect(roundtimer,SIGNAL(timeout()), this, SLOT(nextround()));
+    roundtimer->start(180000); //This sets the round timer to 3 minutes
+    enemytimer->start(5000); //We can adjust this number for difficulty
 }
 
 gameLoop::show() //idk what this is supposed to do
@@ -78,24 +69,44 @@ gameLoop::spawn()
     addItem(enemyarray[randomenemy]);
 }
 
+
 gameLoop::nextround()
 {
-    //makes realplayer equivalent to player in scene
-    //realPlayer = *player;
+    if (roundcount > 5){
+        //code for the end of the game
+    }
+    else{
+        //makes realplayer equivalent to player in scene
+        //realPlayer = *player;
 
-    //removes and deletes items from scene
-    clearScene();
+        //removes and deletes items from scene
+        clearScene();
 
-    //*player = realPlayer;
-    //re-add player to scene
-    addItem(player);
+        //*player = realPlayer;
+        //re-add player to scene
+        addItem(player);
 
-    //Makes Player allowed to become focusable
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    //Allows Player to receive input
-    player->setFocus();
+        //Makes Player allowed to become focusable
+        player->setFlag(QGraphicsItem::ItemIsFocusable);
+        //Allows Player to receive input
+        player->setFocus();
 
-    setSceneInView();
-    showView();
+        setSceneInView();
+        showView();
+        //the following if statements are for Nick to implement his background
+        if(roundcount = 2){
+
+        }
+        else if(roundcount = 3){
+
+        }
+        else if(roundcount = 4){
+
+        }
+        else if(roundcount = 5){
+
+        }
+        roundcount++;
+    }
 }
 

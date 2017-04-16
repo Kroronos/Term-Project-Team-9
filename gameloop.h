@@ -7,13 +7,14 @@ class gameLoop : public State, public QObject
 {
         Q_OBJECT
 private:
-    int roundcount = 1;
+
 
 public:
     Player * player;
     gameLoop(int x, int y);
     show();
     displayMainMenu();
+    int roundcount = 1;
 public slots:
     spawn();
     nextround();
