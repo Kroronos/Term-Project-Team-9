@@ -20,6 +20,3 @@ void Score::increase(){
 int Score::getScore(){
     return score;
 }
-
-
-

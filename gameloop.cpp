@@ -1,15 +1,12 @@
 #include "gameloop.h"
 #include "state.h"
+#include "score.h"
+#include "health.h"
 #include "enemy.h"
-#include "player.h"
-
-#include <QObject>
-#include <QTimer>
-#include <stdlib.h>
-#include <QtCore>
-#include <QGraphicsItem>
-#include <QGraphicsObject>
-#include <QGraphicsScene>
+#include "mainmenu.h"
+#include <QGraphicsPixmapItem>
+#include <QPixmap>
+#include <QDebug>
 
 
 gameLoop::gameLoop(int x, int y)
@@ -17,9 +14,9 @@ gameLoop::gameLoop(int x, int y)
 {
     //Create Player
     player = new Player(":/Images/Images/Player_Straight5.png",getScaling());
-    //realPlayer = *player;
 
     //Add Player To Scene
+
     addItem(player);
 
     //Makes Player allowed to become focusable
@@ -27,86 +24,211 @@ gameLoop::gameLoop(int x, int y)
     //Allows Player to receive input
     player->setFocus();
 
-    Game::Game(QWidget *parent){
-    //creating score and health
+    //set up screen
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setFixedSize(1920,1080);
+    showFullScreen();
+
+    //set up scene
+    scene = new QGraphicsScene();
+    scene->setSceneRect(0, 0, 1920, 1080);
+    setScene(scene);
+
+    //create score and health
     score = new Score();
-    sScene->addItem(score);
+    scene->addItem(score);
     health = new Health();
     health->setPos(health->x(), health->y()+25);
-    sScene->addItem(health);
-    }
+    scene->addItem(health);
 
     setSceneInView();
     showView();
 
 
-    //Everything after this belongs to you wesley
-    QTimer *roundtimer = new QTimer();
-    QTimer *enemytimer = new QTimer();
-
-    QObject::connect(enemytimer,SIGNAL(timeout()), this, SLOT(spawn()));
-    QObject::connect(roundtimer,SIGNAL(timeout()), this, SLOT(nextround()));
-    roundtimer->start(180000); //This sets the round timer to 3 minutes
-    enemytimer->start(5000); //We can adjust this number for difficulty
 }
 
-gameLoop::show() //idk what this is supposed to do
+void gameLoop::show()
 {
 
 }
 
-gameLoop::displayMainMenu() //idk what this is supposed to do
-{
+void gameLoop::start(){
+
+    //clear the screen
+    score = 0;
+    level = 1;  //start at level 1
+    health->resetHealth();
 
 }
 
-gameLoop::spawn()
+void gameLoop::replayGame()
 {
-    enemy* enemyarray[5];
-    int random_pos = rand() % 1792; //Width of the screen - 128
-    int randomenemy = rand() % 6;
-    enemyarray[randomenemy]->setPos(random_pos, -128); //This number will be the negative height of the tallest enemy
-    addItem(enemyarray[randomenemy]);
+
+    scene->clear();
+    start();
 }
 
-
-gameLoop::nextround()
-{
-    if (roundcount > 5){
-        //code for the end of the game
+void gameLoop::returnToGame(){
+    //pause menu return to game
+    if (!isStarted)
+        return;
+    isPaused = !isPaused;
+    if (isPaused){
+        timer.stop();
+    } else {
+        timer.start(timeoutTime(), this);
     }
-    else{
-        //makes realplayer equivalent to player in scene
-        //realPlayer = *player;
+    update();
+}
 
-        //removes and deletes items from scene
-        clearScene();
+void gameLoop::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
+{
+    //draw a panel
+    QGraphicsRectItem * panel = new QGraphicsRectItem(x, y, width, height);
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(color);
+    panel->setBrush(brush);
+    panel->setOpacity(opacity); //high values not transparent
+    scene->addItem(panel);
+}
 
-        //*player = realPlayer;
-        //re-add player to scene
-        addItem(player);
+void gameLoop::displayMainMenu(){
+    //create the title
+    QGraphicsTextItem* title = new QGraphicsTextItem(QString("Initiative #9"));
+    QFont titleFont("comic sans", 50);
+    title->setFont(titleFont);
+    int titlexPos = this->width()/2 - title->boundingRect().width()/2;
+    int titleyPos = 150;
+    title->setPos(titlexPos, titleyPos);
+    scene->addItem(title);
 
-        //Makes Player allowed to become focusable
-        player->setFlag(QGraphicsItem::ItemIsFocusable);
-        //Allows Player to receive input
-        player->setFocus();
+    //create the play button
+    mainMenu* play = new mainMenu(QString ("Play"));
+    int buttonxPos = this->width()/2 - play->boundingRect().width()/2;
+    int buttonyPos = 275;
+    play->setPos (buttonxPos, buttonyPos);
+    connect(play, SIGNAL(clicked()), this, SLOT(gameLoop::start()));
+    scene->addItem(play);
 
-        setSceneInView();
-        showView();
-        //the following if statements are for Nick to implement his background
-        if(roundcount = 2){
+    //create the quit button
+    mainMenu* quit = new mainMenu(QString ("Quit"));
+    int bxPos = this->width()/2 - quit->boundingRect().width()/2;
+    int byPos = 350;
+    quit->setPos(bxPos, byPos);
+    connect(quit, SIGNAL(clicked()), this, SLOT(close()));
+    scene->addItem((quit));
 
+
+
+}
+
+void gameLoop::pause()
+{
+    //create pause button on game screen
+    mainMenu* pauseGame = new mainMenu(QString ("Pause"));
+    int buttonxPos = this->width()/2 - pauseGame->boundingRect().width()/2;
+    int buttonyPos = 275;
+    pauseGame->setPos (buttonxPos, buttonyPos);
+     scene->addItem(pauseGame);
+    connect(pauseGame, SIGNAL(clicked()), this, SLOT(displayPauseMenu()));
+
+    QString message2;
+    message2 = "Game Paused";
+
+    displayGameOverWindow(message2);
+
+
+}
+
+void gameLoop::displayPauseMenu(QString displayText)
+{
+    //disable scene items
+    for (size_t i = 0, n = scene->items().size(); i < n; i++){
+        scene->items()[i]->setEnabled(false);
+    }
+
+    //semi transparent panel
+    drawPanel(0, 0, 1024, 768, Qt::black, 0.65);
+
+    //draw panel
+    drawPanel(312, 184, 400, 400, Qt::lightGray, 0.75);
+
+    //create Resume button
+    mainMenu* resumeGame = new mainMenu(QString ("Resume"));
+    resumeGame->setPos(410, 300);
+    scene->addItem(resumeGame);
+    connect(resumeGame, SIGNAL (clicked()), this, SLOT(returnToGame()));
+
+    //create quit button
+    mainMenu* quit = new mainMenu (QString ("Quit"));
+    quit->setPos(410,375);
+    scene->addItem(quit);
+    connect(quit, SIGNAL(clicked()), this, SLOT(close()));
+
+    //create text
+    QGraphicsTextItem *pausedText = new QGraphicsTextItem(displayText);
+    pausedText->setPos (460, 225);
+    scene->addItem(pausedText);
+}
+
+void gameLoop::gameOver()  //player health is 0
+{
+    QString message;
+    message = "You lost!";
+
+    displayGameOverWindow(message);
+}
+
+void gameLoop::displayGameOverWindow(QString textToDisplay)
+{
+    //disable scene items
+    for (size_t i = 0, n = scene->items().size(); i < n; i++){
+        scene->items()[i]->setEnabled(false);
+    }
+
+    //semi transparent panel
+    drawPanel(0, 0, 1024, 768, Qt::black, 0.65);
+
+    //draw panel
+    drawPanel(312, 184, 400, 400, Qt::lightGray, 0.75);
+
+    //create playAgain button
+    mainMenu* playAgain = new mainMenu(QString ("Play Again"));
+    playAgain->setPos(410, 300);
+    scene->addItem(playAgain);
+    connect(playAgain, SIGNAL (clicked()), this, SLOT(replayGame()));
+
+    //create quit button
+    mainMenu* quit = new mainMenu (QString ("Quit"));
+    quit->setPos(410,375);
+    scene->addItem(quit);
+    connect(quit, SIGNAL(clicked()), this, SLOT(close()));
+
+    //create text
+    QGraphicsTextItem *gameOverText = new QGraphicsTextItem(textToDisplay);
+    gameOverText->setPos (500, 225);
+    scene->addItem(gameOverText);
+}
+
+void gameLoop::deleteEnemy(QGraphicsItem* hitEnemy)
+{
+    for(int i = 0; i < Enemies.size(); ++i) {
+        if(Enemies[i] == hitEnemy) {
+            sScene->removeItem(Enemies[i]);
+            delete Enemies[i]->myEnemyWeapon;
+            delete Enemies[i];
         }
-        else if(roundcount = 3){
-
-        }
-        else if(roundcount = 4){
-
-        }
-        else if(roundcount = 5){
-
-        }
-        roundcount++;
     }
 }
 
+void gameLoop::spawn()
+{
+
+}
+
+void gameLoop::nextround()
+{
+
+}
