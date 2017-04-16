@@ -29,11 +29,11 @@ gameLoop::gameLoop(int x, int y)
 
     Game::Game(QWidget *parent){
     //creating score and health
-   score = new Score();
-   sScene->addItem(score);
-   health = new Health();
-   health->setPos(health->x(), health->y()+25);
-   sScene->addItem(health);
+    score = new Score();
+    sScene->addItem(score);
+    health = new Health();
+    health->setPos(health->x(), health->y()+25);
+    sScene->addItem(health);
     }
 
     setSceneInView();

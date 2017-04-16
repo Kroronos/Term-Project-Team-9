@@ -3,7 +3,7 @@
 #include "state.h"
 #include "player.h"
 
-class gameLoop : public State, public QObject
+class gameLoop : public QObject, public State
 {
         Q_OBJECT
 private:
