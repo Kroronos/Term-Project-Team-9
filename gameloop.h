@@ -1,4 +1,4 @@
-#ifndef GAMELOOP_H
+﻿#ifndef GAMELOOP_H
 #define GAMELOOP_H
 
 #include <QGraphicsView>
@@ -47,8 +47,11 @@ public:
     void gameOver();
     void displayGameOverWindow(QString textToDisplay);
     void pause();
-    void displayPauseMenu(QString displayText);
+ //   void freeze();
     void deleteEnemy(QGraphicsItem* hitEnemy);
+
+    void gameLoop::pauseEnemy(QGraphicsItem* pausedEnemy);
+    void gameLoop::unpauseEnemy(QGraphicsItem* pausedEnemy);
 
     //public attributes
     QGraphicsScene* scene;
@@ -65,6 +68,7 @@ public slots:
     void start();
     void replayGame();
     void returnToGame();
+    void displayPauseMenu();
 };
 
 #endif // GAMELOOP_H

@@ -10,6 +10,7 @@ State::State(int x, int y)
     sScene = new QGraphicsScene();
     sView = new QGraphicsView();
 
+
     xDimension=x;
     yDimension=y;
     if(x == 1920 && y == 1080) {
