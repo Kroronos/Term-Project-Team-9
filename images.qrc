@@ -54,5 +54,6 @@
         <file>Images/Player_Turn_Right9.png</file>
         <file>Images/Player_Turn_Right10.png</file>
         <file>Images/Player_Turn_Right11.png</file>
+        <file>Images/Bullet_Enemy.png</file>
     </qresource>
 </RCC>
