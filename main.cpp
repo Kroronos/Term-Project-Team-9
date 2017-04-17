@@ -9,23 +9,20 @@
 #include "player.h"
 #include "bullet.h"
 #include "gameloop.h"
-#include "game.h"
 #include "mainMenu.h"
 
-Game *game;
+
 gameLoop * globalGame;
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    game = new Game();
+    globalGame = new gameLoop(0, 0);
 
-    game->startGame = globalGame;
+    globalGame->show();
 
-    game->show();
-
-    game->displayMainMenu();
+    globalGame->displayMainMenu();
 
     return a.exec();
 
