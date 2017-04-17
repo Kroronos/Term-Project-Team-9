@@ -1,6 +1,12 @@
 #include "player.h"
 #include "actor.h"
 #include "bullet.h"
+#include "enemy.h"
+#include "enemyone.h"
+#include "enemytwo.h"
+#include "enemythree.h"
+#include "enemyfour.h"
+
 #include <QKeyEvent>
 #include <QtCore>
 #include <QGraphicsScene>
@@ -14,6 +20,8 @@ Player::Player(const QString &fileName, double scaling)
     : Actor(fileName, scaling)
 {
 
+    this->scaling = scaling * .75;
+    health = new Health();
     //Makes Player allowed to become focusable
     setFlag(QGraphicsItem::ItemIsFocusable);
     //Allows Player to receive input
@@ -33,7 +41,7 @@ Player::Player(const QString &fileName, double scaling)
     //500 ms interval updates every half second
     slowTimer-> start(500);
 
-    equippedWeapon = new Weapon(500, this, 3, scaling);
+    equippedWeapon = new Weapon(500, this, nullptr, 3, scaling);
 }
 
 //Adds Keys Pressed By Player To A Set
@@ -98,19 +106,18 @@ void Player::setShoot(Qt::Key a)
 
 int Player::getHealth()
 {
-    return health;
+    return health->getHealth();
 }
 
 void Player::decrementHealth()
 {
-    --health;
+    health->decrease();
 }
 
 void Player::incrementHealth()
 {
-    ++health;
+    health->increase();
 }
-
 
 //Acts on a timer interval for each key pressed
 //Increments through every key pressed and performs appropriate actions
@@ -141,27 +148,27 @@ void Player::keyPressFastAction()
                 if(!(hasMovedRight)) {
                     switch(movedLeft)
                     {
-                        case 1: setPixmap(QPixmap(":/Images/Images/Player_Turn_Left1.png"));
+                        case 1: setPixmap(QPixmap(":/Images/Images/Player_Turn_Left1.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left1.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left1.png").height()* scaling));
                             break;
-                        case 2:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left2.png"));
+                        case 2:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left2.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left2.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left2.png").height()* scaling));
                             break;
-                        case 3:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left3.png"));
+                        case 3:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left3.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left3.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left3.png").height()* scaling));
                             break;
-                        case 4:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left4.png"));
+                        case 4:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left4.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left4.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left4.png").height()* scaling));
                             break;
-                        case 5:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left5.png"));
+                        case 5:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left5.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left5.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left5.png").height()* scaling));
                             break;
-                        case 6:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left6.png"));
+                        case 6:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left6.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left6.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left6.png").height()* scaling));
                             break;
-                        case 7:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left7.png"));
+                        case 7:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left7.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left7.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left7.png").height()* scaling));
                             break;
-                        case 8:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left8.png"));
+                        case 8:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left8.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left8.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left8.png").height()* scaling));
                             break;
-                        case 9:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left9.png"));
+                        case 9:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left9.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left9.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left9.png").height()* scaling));
                             break;
-                        case 10:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left10.png"));
+                        case 10:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left10.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left10.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left10.png").height()* scaling));
                             break;
-                        case 11:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left11.png"));
+                        case 11:setPixmap(QPixmap(":/Images/Images/Player_Turn_Left11.png").scaled(QPixmap(":/Images/Images/Player_Turn_Left11.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Left11.png").height()* scaling));
                             break;
                     }
                 }
@@ -181,27 +188,27 @@ void Player::keyPressFastAction()
                 movedDown = 0;
                 if(!(hasMovedLeft)) {
                     switch(movedRight) {
-                    case 1:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right1.png"));
+                    case 1:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right1.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right1.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right1.png").height()* scaling));
                         break;
-                    case 2:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right2.png"));
+                    case 2:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right2.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right2.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right2.png").height()* scaling));
                         break;
-                    case 3:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right3.png"));
+                    case 3:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right3.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right3.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right3.png").height()* scaling));
                         break;
-                    case 4:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right4.png"));
+                    case 4:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right4.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right4.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right4.png").height()* scaling));
                         break;
-                    case 5:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right5.png"));
+                    case 5:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right5.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right5.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right5.png").height()* scaling));
                         break;
-                    case 6:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right6.png"));
+                    case 6:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right6.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right6.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right6.png").height()* scaling));
                         break;
-                    case 7:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right7.png"));
+                    case 7:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right7.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right7.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right7.png").height()* scaling));
                         break;
-                    case 8:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right8.png"));
+                    case 8:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right8.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right8.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right8.png").height()* scaling));
                         break;
-                    case 9:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right9.png"));
+                    case 9:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right9.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right9.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right9.png").height()* scaling));
                         break;
-                    case 10:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right10.png"));
+                    case 10:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right10.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right10.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right10.png").height()* scaling));
                         break;
-                    case 11:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right11.png"));
+                    case 11:setPixmap(QPixmap(":/Images/Images/Player_Turn_Right11.png").scaled(QPixmap(":/Images/Images/Player_Turn_Right11.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Right11.png").height()* scaling));
                         break;
                     }
                 }
@@ -221,27 +228,27 @@ void Player::keyPressFastAction()
                 movedDown = 0;
                 if(!(hasMovedLeft || hasMovedRight)) {
                     switch(movedUp) {
-                    case 1:setPixmap(QPixmap(":/Images/Images/Player_Straight8.png"));
+                    case 1:setPixmap(QPixmap(":/Images/Images/Player_Straight8.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight8.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight8.png").height()* scaling));
                         break;
-                    case 2:setPixmap(QPixmap(":/Images/Images/Player_Straight9.png"));
+                    case 2:setPixmap(QPixmap(":/Images/Images/Player_Straight9.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight9.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight9.png").height()* scaling));
                         break;
-                    case 3:setPixmap(QPixmap(":/Images/Images/Player_Straight10.png"));
+                    case 3:setPixmap(QPixmap(":/Images/Images/Player_Straight10.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight10.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight10.png").height()* scaling));
                         break;
-                    case 4:setPixmap(QPixmap(":/Images/Images/Player_Straight11.png"));
+                    case 4:setPixmap(QPixmap(":/Images/Images/Player_Straight11.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight11.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight11.png").height()* scaling));
                         break;
-                    case 5:setPixmap(QPixmap(":/Images/Images/Player_Straight12.png"));
+                    case 5:setPixmap(QPixmap(":/Images/Images/Player_Straight12.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight12.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight12.png").height()* scaling));
                         break;
-                    case 6:setPixmap(QPixmap(":/Images/Images/Player_Straight13.png"));
+                    case 6:setPixmap(QPixmap(":/Images/Images/Player_Straight13.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight13.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight13.png").height()* scaling));
                         break;
-                    case 7:setPixmap(QPixmap(":/Images/Images/Player_Straight14.png"));
+                    case 7:setPixmap(QPixmap(":/Images/Images/Player_Straight14.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight14.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight14png").height()* scaling));
                         break;
-                    case 8:setPixmap(QPixmap(":/Images/Images/Player_Straight15.png"));
+                    case 8:setPixmap(QPixmap(":/Images/Images/Player_Straight15.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight15.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight15.png").height()* scaling));
                         break;
-                    case 9:setPixmap(QPixmap(":/Images/Images/Player_Straight16.png"));
+                    case 9:setPixmap(QPixmap(":/Images/Images/Player_Straight16.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight16.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight16.png").height()* scaling));
                         break;
-                    case 10:setPixmap(QPixmap(":/Images/Images/Player_Straight17.png"));
+                    case 10:setPixmap(QPixmap(":/Images/Images/Player_Straight17.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight17.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight17.png").height()* scaling));
                         break;
-                    case 11:setPixmap(QPixmap(":/Images/Images/Player_Straight18.png"));
+                    case 11:setPixmap(QPixmap(":/Images/Images/Player_Straight18.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight18.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight18.png").height()* scaling));
                         movedUp = 0;
                         break;
                     }
@@ -262,28 +269,28 @@ void Player::keyPressFastAction()
                         movedUp = 0;
                         movedLeft = 0;
                         switch(movedDown) {
-                        case 1:setPixmap(QPixmap(":/Images/Images/Player_Straight8.png"));
+                        case 1:setPixmap(QPixmap(":/Images/Images/Player_Straight8.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight8.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight8.png").height()* scaling));
                             break;
-                        case 2:setPixmap(QPixmap(":/Images/Images/Player_Straight9.png"));
+                        case 2:setPixmap(QPixmap(":/Images/Images/Player_Straight9.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight9.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight9.png").height()* scaling));
                             break;
-                        case 3:setPixmap(QPixmap(":/Images/Images/Player_Straight10.png"));
+                        case 3:setPixmap(QPixmap(":/Images/Images/Player_Straight10.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight10.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight10.png").height()* scaling));
                             break;
-                        case 4:setPixmap(QPixmap(":/Images/Images/Player_Straight11.png"));
+                        case 4:setPixmap(QPixmap(":/Images/Images/Player_Straight11.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight11.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight11.png").height()* scaling));
                             break;
-                        case 5:setPixmap(QPixmap(":/Images/Images/Player_Straight12.png"));
+                        case 5:setPixmap(QPixmap(":/Images/Images/Player_Straight12.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight12.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight12.png").height()* scaling));
                             break;
-                        case 6:setPixmap(QPixmap(":/Images/Images/Player_Straight13.png"));
+                        case 6:setPixmap(QPixmap(":/Images/Images/Player_Straight13.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight13.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight13.png").height()* scaling));
                             break;
-                        case 7:setPixmap(QPixmap(":/Images/Images/Player_Straight14.png"));
+                        case 7:setPixmap(QPixmap(":/Images/Images/Player_Straight14.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight14.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight14png").height()* scaling));
                             break;
-                        case 8:setPixmap(QPixmap(":/Images/Images/Player_Straight15.png"));
+                        case 8:setPixmap(QPixmap(":/Images/Images/Player_Straight15.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight15.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight15.png").height()* scaling));
                             break;
-                        case 9:setPixmap(QPixmap(":/Images/Images/Player_Straight16.png"));
+                        case 9:setPixmap(QPixmap(":/Images/Images/Player_Straight16.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight16.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight16.png").height()* scaling));
                             break;
-                        case 10:setPixmap(QPixmap(":/Images/Images/Player_Straight17.png"));
+                        case 10:setPixmap(QPixmap(":/Images/Images/Player_Straight17.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight17.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight17.png").height()* scaling));
                             break;
-                        case 11:setPixmap(QPixmap(":/Images/Images/Player_Straight18.png"));
-                            movedUp = 0;
+                        case 11:setPixmap(QPixmap(":/Images/Images/Player_Straight18.png").scaled(QPixmap(":/Images/Images/Player_Turn_Straight18.png").width()* scaling, QPixmap(":/Images/Images/Player_Turn_Straight18.png").height()* scaling));
+                            movedDown = 0;
                             break;
                         }
                     }
@@ -302,4 +309,3 @@ void Player::keyPressSlowAction()
 {
 
 }
-
