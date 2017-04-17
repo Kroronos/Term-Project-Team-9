@@ -7,7 +7,7 @@
 
 
 Actor::Actor(const QString &fileName, double scaling)
-    :QObject(), QGraphicsPixmapItem(QPixmap(fileName))
+    :QObject(), QGraphicsPixmapItem(QPixmap(fileName).scaled(QPixmap(fileName).width()* scaling, QPixmap(fileName).height()* scaling))
 {
     boundingRectRef = boundingRect();
     this->scaling = scaling;
