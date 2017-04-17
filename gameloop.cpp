@@ -14,7 +14,6 @@
 #include <QBrush>
 #include <QPen>
 #include <QImage>
-#include <QSound>
 #include <vector>
 #include "enemyone.h"
 #include "enemytwo.h"
@@ -182,7 +181,6 @@ int gameLoop::timeoutTime()   //regulates speed/ time it takes for objects to fa
 
 void gameLoop::displayMainMenu(){
     //create the title
-    QSound::play(":/sounds/sounds/Kalipluche_-_Social_sentiments_8-bit_mix.wav");
     scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_main.jpg")));
     QGraphicsTextItem* title = new QGraphicsTextItem(QString("Initiative #9"));
     QFont titleFont("Impact", 50);
@@ -441,8 +439,6 @@ void gameLoop::nextRound()
     if (roundCount == 0) {
         speedModifer = 1;
     }
-    //Will Play Music Per Round
-    sounds::playRound(roundCount);
 
     switch(roundCount) {
 
