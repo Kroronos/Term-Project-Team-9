@@ -1,24 +1,34 @@
 #include "health.h"
-#include "game.h"
+#include "gameloop.h"
 #include <QFont>
 
-extern Game * game;
 
+// has access to global variable global game, to call game over screen
+extern gameLoop * globalGame;
 Health::Health(QGraphicsItem *parent) : QGraphicsTextItem(parent){
     //initialize health to 3
     health = 3;
 
     //draw text
-    setPlainText(QString("Health: ") + QString::number(health)); //Health: 3
-    setDefaultTextColor(Qt::red);
-    setFont(QFont("times", 16));
+    text = new QGraphicsTextItem();
+    text->setPlainText(QString("Health: ") + QString::number(health)); //Health: 3
+    text->setDefaultTextColor(Qt::red);
+    text->setFont(QFont("times", 16));
+}
+
+void Health::increase()
+{
+    ++health;
+    text->setPlainText(QString("Health: ") + QString::number(health));
+    update();
 }
 
 void Health::decrease(){
-    health--;
-    setPlainText(QString("Health: ") + QString::number(health)); //Health: 2
+    --health;
+    text->setPlainText(QString("Health: ") + QString::number(health)); //Health: 2
+    update();
    if (health == 0){   //call game over screen
-       game->gameOver();
+       globalGame->gameOver();
    }
 }
 
