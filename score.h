@@ -7,6 +7,7 @@
 
 class Score: public QGraphicsTextItem{
 public:
+    QGraphicsTextItem * scoreBoard;
     Score (QGraphicsItem * parent=0);
     void increase();
     int getScore();

@@ -54,5 +54,13 @@
         <file>Images/Player_Turn_Right9.png</file>
         <file>Images/Player_Turn_Right10.png</file>
         <file>Images/Player_Turn_Right11.png</file>
+        <file>Images/Bullet_Enemy.png</file>
+        <file>Images/space.jpg</file>
+        <file>Images/space_blue.png</file>
+        <file>Images/space_moon.jpg</file>
+        <file>Images/space_purple.jpg</file>
+        <file>Images/space_red.gif</file>
+        <file>Images/space_main.jpg</file>
+        <file>Images/win.jpg</file>
     </qresource>
 </RCC>

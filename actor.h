@@ -1,6 +1,7 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 #include <QtCore>
+#include <QObject>
 #include <QGraphicsPixmapItem>
 
 class Actor: public QObject, public QGraphicsPixmapItem

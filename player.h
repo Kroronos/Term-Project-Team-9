@@ -8,8 +8,9 @@
 #include "actor.h"
 #include "weapon.h"
 #include "bullet.h"
+#include "health.h"
 
-class Player : /*public QObject,*/public Actor
+class Player : public Actor
 {
     Q_OBJECT
 private:
@@ -32,7 +33,7 @@ private:
     //Timer used for staggered actions that should be continous
     QTimer* slowTimer;
 
-    int health = 5;
+
 
     //Used to track animation frames for movement
     int movedUp = 0;
@@ -40,7 +41,14 @@ private:
     int movedRight = 0;
     int movedDown = 0;
 
+    //used to retain movement equivalent to screen size
+    double realScaling;
+    //personal scaling modifer (used to change picture to manageable size)
+    double scaling;
+
     Weapon* equippedWeapon;
+    //Stores collsions
+    QList<QGraphicsItem *> collision;
 
 public:
     Player(const QString &fileName, double scaling);
@@ -48,6 +56,7 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
+    Health* health;
     int getHealth();
     void decrementHealth();
     void incrementHealth();
@@ -63,6 +72,12 @@ public:
     void setMoveRight2(Qt::Key a);
 
     void setShoot(Qt::Key a);
+
+    //Used for pause and game over
+    void startFastTimer();
+    void stopFastTimer();
+    void startShooting();
+    void stopShooting();
 
 public slots:
     void keyPressFastAction();

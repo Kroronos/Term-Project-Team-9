@@ -1,5 +1,6 @@
 #include "mainmenu.h"
 #include <QGraphicsTextItem>
+#include <QFont>
 #include <QBrush>
 
 mainMenu::mainMenu(QString name, QGraphicsItem *parent) : QGraphicsRectItem(parent){
@@ -42,6 +43,15 @@ void mainMenu::hoverLeaveEvent(QGraphicsSceneHoverEvent *event){
     setBrush(brush);
 }
 
+void mainMenu::setMainFont(QFont font) {
+    text->setFont(font);
+}
+
+void mainMenu::setMainColor(QColor a)
+{
+    text->setDefaultTextColor(a);
+}
+
 void mainMenu::start()
 {
 
@@ -49,7 +59,6 @@ void mainMenu::start()
 
 void mainMenu::close()
 {
-
 }
 
 void mainMenu::displayPauseMenu()

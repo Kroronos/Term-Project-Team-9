@@ -4,7 +4,10 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+            multimedia multimediawidgets
+QT += multimedia multimediawidgets
+QT += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,7 +32,17 @@ SOURCES += main.cpp \
     player.cpp \
     bullet.cpp \
     weapon.cpp \
-    gameloop.cpp
+    gameloop.cpp \
+    health.cpp \
+    score.cpp \
+    mainmenu.cpp \
+    enemy.cpp \
+    enemyone.cpp \
+    enemytwo.cpp \
+    enemythree.cpp \
+    enemyfour.cpp \
+    rounds.cpp \
+    sounds.cpp
 
 HEADERS  += \
     state.h \
@@ -37,9 +50,23 @@ HEADERS  += \
     player.h \
     bullet.h \
     weapon.h \
-    gameloop.h
+    gameloop.h \
+    health.h \
+    score.h \
+    mainmenu.h \
+    enemy.h \
+    enemyone.h \
+    enemytwo.h \
+    enemythree.h \
+    enemyfour.h \
+    rounds.h \
+    sounds.h
 
 FORMS    +=
 
 RESOURCES += \
-    images.qrc
+    images.qrc \
+    sounds.qrc
+
+DISTFILES += \
+    soundImport.qml

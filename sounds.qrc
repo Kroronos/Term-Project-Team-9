@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>sounds/Go Cart - Drop Mix.mp3</file>
+        <file>sounds/laser.aiff</file>
+        <file>sounds/Azureflux_-_04_-_I_Ate_All_The_Snacks.mp3</file>
+        <file>sounds/Captive_Portal_-_06_-_Is_It_Minus_5.mp3</file>
+        <file>sounds/Kalipluche_-_Social_sentiments_8-bit_mix.mp3</file>
+        <file>sounds/Pocketmaster_-_01_-_Dr_Sleepgood_3.mp3</file>
+        <file>sounds/Visager_-_01_-_Title_Theme.mp3</file>
+        <file>sounds/Visager_-_05_-_Battle.mp3</file>
+        <file>sounds/Visager_-_08_-_Winter_Village.mp3</file>
+        <file>sounds/explosion.mp3</file>
+    </qresource>
+</RCC>

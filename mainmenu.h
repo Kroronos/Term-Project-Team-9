@@ -15,6 +15,8 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void setMainFont(QFont font);
+    void setMainColor(QColor a);
 signals:
     void clicked();
 
