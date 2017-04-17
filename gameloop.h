@@ -54,7 +54,7 @@ public:
     void unpauseEnemy(QGraphicsItem* pausedEnemy);
 
     //public attributes
-    QGraphicsScene* scene;
+    QGraphicsScene* scene1;
 
     //pointer for score
     Score *score;
