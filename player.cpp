@@ -118,6 +118,11 @@ void Player::stopFastTimer()
     fastTimer->stop();
 }
 
+void Player::startShooting()
+{
+
+}
+
 void Player::stopShooting()
 {
     equippedWeapon->softSetCanFire(false);

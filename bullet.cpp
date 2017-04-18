@@ -27,7 +27,7 @@ Bullet::Bullet(bool playerMade, double x, double y, double scaling)
     xMove = x * getScaling();
     yMove = y * getScaling();
 
-    movementTimer->start(50); 
+    movementTimer->start(50);
 
 }
 
@@ -54,7 +54,7 @@ void Bullet::move()
             //check to see if enemy is hit by player bullet
             if(typeid(*(c)) == typeid(enemyOne) || typeid(*(c)) == typeid(enemyTwo) || typeid(*(c)) == typeid(enemyThree) || typeid(*(c)) == typeid(enemyFour)) {
                 scene()->removeItem(this);
-                sounds::playExplosion();
+
                 globalGame->deleteEnemy(c);
                 if(globalGame->score){
                     globalGame->score->increase();
@@ -71,7 +71,7 @@ void Bullet::move()
         else {
             //check to see if player is hit by enemy bullet
             if(typeid(*c) == typeid(Player)) {
-                sounds::playExplosion();
+
                 globalGame->player->decrementHealth();
                 scene()-> removeItem(this);
                 delete this;
@@ -84,16 +84,16 @@ void Bullet::move()
     //Move away from player
     if(playerMade){
         setPos(x()+xMove,y()-yMove);
-        sounds::playBullet();
+
         //Delete bullets when they leave upper region
-        if(pos().y() < 0 - y() - 2*getHeight()){
+        if(pos().y() < 0- 2*getHeight()){
             scene()->removeItem(this);
             delete this;
         }
     }
     //Move towards player
     else {
-       sounds::playBullet();
+
        setPos(x()+xMove,y()+yMove);
        //Delete bullets when they leave bottom region
        if(pos().y() > scene()->height() + 2*getHeight()){

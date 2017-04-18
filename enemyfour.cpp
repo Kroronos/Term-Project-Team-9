@@ -8,13 +8,13 @@
 enemyFour::enemyFour(double scaling, double speed)
     :Enemy(":/Images/Images/Enemy_4.png", scaling/3.5)
 {
+      count4 = 0;
       this->speed = speed;
-      myEnemyWeapon = new Weapon(1500, nullptr, this, 3, scaling);
+      myEnemyWeapon = new Weapon(2500, nullptr, this, 3, scaling);
       // set random Position
       int random_number = rand() % 1300;
       int random_distance = rand()% 100;
-      setPos(random_number,random_distance);
-
+      setPos(random_number,random_distance-175);
       // Connect
       timer = new QTimer(this);
       connect(timer,SIGNAL(timeout()),this,SLOT(move()));
@@ -22,13 +22,16 @@ enemyFour::enemyFour(double scaling, double speed)
       timer->start(25);
 }
 
-int count4 = 0;
+
 bool sidetoside = false;
 bool direction;
-int random_distance = (rand()% 500) + 200;
+
 
 void enemyFour::move()
 {
+    if(count4 == 0) {
+        random_distance = (rand()% 300);
+    }
     if(count4 <= random_distance){
     // Initiate falling
           setPos(x(),y()+3);
@@ -56,7 +59,7 @@ void enemyFour::move()
     }
 
 
-    if(pos().y() + getHeight() > 800){
+    if(pos().y() + getHeight() > 2000){
         scene()->removeItem(this);
         delete this->myEnemyWeapon;
         delete this;

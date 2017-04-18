@@ -9,7 +9,7 @@ enemyThree::enemyThree(double scaling, double speed)
     :Enemy(":/Images/Images/Enemy_7.png", scaling/3)
 {
       this->speed = speed;
-      myEnemyWeapon = new Weapon(1000, nullptr, this, scaling);
+      myEnemyWeapon = new Weapon(1500, nullptr, this, scaling);
       // set random Position
       int random_number = rand() % 1300;
       setPos(random_number,0);

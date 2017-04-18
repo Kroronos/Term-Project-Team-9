@@ -4,11 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui \
-            multimedia multimediawidgets
-QT += multimedia multimediawidgets
-QT += multimedia
-
+QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ProjectSkeleton
@@ -41,8 +37,7 @@ SOURCES += main.cpp \
     enemytwo.cpp \
     enemythree.cpp \
     enemyfour.cpp \
-    rounds.cpp \
-    sounds.cpp
+    rounds.cpp
 
 HEADERS  += \
     state.h \
@@ -52,7 +47,6 @@ HEADERS  += \
     weapon.h \
     gameloop.h \
     health.h \
-    score.h \
     mainmenu.h \
     enemy.h \
     enemyone.h \
@@ -60,13 +54,11 @@ HEADERS  += \
     enemythree.h \
     enemyfour.h \
     rounds.h \
-    sounds.h
+    score.h
 
 FORMS    +=
 
-RESOURCES += \
-    images.qrc \
-    sounds.qrc
+RESOURCES +=\
+    images.qrc
 
-DISTFILES += \
-    soundImport.qml
+DISTFILES +=

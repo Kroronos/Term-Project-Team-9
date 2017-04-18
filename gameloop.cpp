@@ -14,7 +14,6 @@
 #include <QBrush>
 #include <QPen>
 #include <QImage>
-#include <QSound>
 #include <vector>
 #include "enemyone.h"
 #include "enemytwo.h"
@@ -78,6 +77,12 @@ void gameLoop::start(){
     scene->addItem(player);
     player->setPos(0 + scene->width()/2, 0 + 4*(player->getHeight()));
 
+    player->startFastTimer();
+    //Makes Player allowed to become focusable
+    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    //Allows Player to receive input
+    player->setFocus();
+
     //generate rounds/round display to manage gameflow
     round = new rounds();
     speedModifer = 1;
@@ -125,9 +130,11 @@ void gameLoop::replayGame()
     scene->removeItem(player);
     foreach(QGraphicsItem* a, scene->items()) {
         deleteEnemy(a);
+        delete a;
     }
-
     scene->clear();
+    player->stopFastTimer();
+    player->stopShooting();
     start();
 }
 
@@ -182,7 +189,6 @@ int gameLoop::timeoutTime()   //regulates speed/ time it takes for objects to fa
 
 void gameLoop::displayMainMenu(){
     //create the title
-    QSound::play(":/sounds/sounds/Kalipluche_-_Social_sentiments_8-bit_mix.wav");
     scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_main.jpg")));
     QGraphicsTextItem* title = new QGraphicsTextItem(QString("Initiative #9"));
     QFont titleFont("Impact", 50);
@@ -243,8 +249,8 @@ void gameLoop::displayPauseMenu(/*QString displayText*/)
         pauseEnemy(a);
         pauseBullet(a);
     }
-    player->stopFastTimer();
     player->stopShooting();
+    player->stopFastTimer();
     pauseSpawnTimer();
     pauseRoundTimer();
 
@@ -425,7 +431,6 @@ void gameLoop::spawn()
          }
          else if(randomenemy == 4){
              enemyFour *newenemy = new enemyFour(1, speedModifer);
-             newenemy->setPos(random_pos, -128);
              scene->addItem(newenemy);
              Enemies.push_back(newenemy);
          }
@@ -441,8 +446,6 @@ void gameLoop::nextRound()
     if (roundCount == 0) {
         speedModifer = 1;
     }
-    //Will Play Music Per Round
-    sounds::playRound(roundCount);
 
     switch(roundCount) {
 
@@ -452,19 +455,19 @@ void gameLoop::nextRound()
         break;
     case 2:
         scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_blue.png")));
-        spawnTimer->start(2000/1.75);
+        spawnTimer->start(1500);
         break;
     case 3:
         scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_moon.jpg")));
-        spawnTimer->start(2000/(1.75*1.75));
+        spawnTimer->start(1000);
         break;
     case 4:
         scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_purple.jpg")));
-        spawnTimer->start(2000/(1.75*1.75*1.75));
+        spawnTimer->start(750);
         break;
     case 5:
         scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_red.gif")));
-        spawnTimer->start(2000/(1.75*1.75*1.75*1.75));
+        spawnTimer->start(700);
         break;
     case 6:
         player->stopFastTimer();
