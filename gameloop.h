@@ -82,6 +82,9 @@ public:
     mainMenu* playAgain;
     mainMenu* pauseGame;
 
+    //pause text
+    QGraphicsTextItem *pausedText;
+
     //Round Counter
     int roundCount = 0;
     double speedModifer;

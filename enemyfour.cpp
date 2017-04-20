@@ -61,7 +61,6 @@ void enemyFour::move()
 
     if(pos().y() + getHeight() > 2000){
         scene()->removeItem(this);
-        delete this->myEnemyWeapon;
         delete this;
         return;
     }

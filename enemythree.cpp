@@ -28,7 +28,6 @@ void enemyThree::move()
     //Delete of boundaries
     if(pos().y() > scene()->height()){
         scene()->removeItem(this);
-        delete this->myEnemyWeapon;
         delete this;
         return;
     }

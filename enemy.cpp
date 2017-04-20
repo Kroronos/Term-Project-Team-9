@@ -7,6 +7,16 @@ Enemy::Enemy(const QString &fileName, double scaling)
 {
 }
 
+Enemy::~Enemy()
+{
+    if(myEnemyWeapon != nullptr) {
+        delete myEnemyWeapon;
+    }
+    if(timer != nullptr) {
+        delete timer;
+    }
+}
+
 void Enemy::stopShooting()
 {
 
@@ -17,7 +27,12 @@ void Enemy::stopShooting()
 
 void Enemy::stopMoving()
 {
-    timer->stop();
+    if(this != nullptr) {
+        if(timer != nullptr) {
+            timer->stop();
+        }
+    }
+
 }
 
 void Enemy::startsShooting()

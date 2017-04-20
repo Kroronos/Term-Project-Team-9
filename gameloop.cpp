@@ -5,7 +5,6 @@
 #include "enemy.h"
 #include "mainmenu.h"
 #include "state.h"
-#include "sounds.h"
 #include <QGraphicsPixmapItem>
 #include <QCoreApplication>
 #include <QPixmap>
@@ -129,26 +128,36 @@ void gameLoop::replayGame()
 {
     scene->removeItem(player);
     foreach(QGraphicsItem* a, scene->items()) {
-        deleteEnemy(a);
+        if (typeid(*a) == typeid(Enemy)) {
+            deleteEnemy(a);
+        }
         delete a;
     }
     scene->clear();
+    qDebug() << "Did we get here?";
     player->stopFastTimer();
-    player->stopShooting();
+
+    qDebug() << "How about here?";
     start();
+    qDebug() << "Or even here?";
 }
 
 void gameLoop::returnToGame(){
     //unpause
     foreach(QGraphicsItem* a, scene->items()){
         a->setEnabled(true);
-        unpauseEnemy(a);
-        unpauseBullet(a);
+        if(typeid(*(a)) == typeid(enemyOne) || typeid(*(a)) == typeid(enemyTwo) || typeid(*(a)) == typeid(enemyThree) || typeid(*(a)) == typeid(enemyFour)) {
+            unpauseEnemy(a);
+        }
+        if(typeid(*a) == typeid(Bullet)) {
+            unpauseBullet(a);
+        }
     }
     startSpawnTimer();
     startRoundTimer();
     player->startFastTimer();
 
+    scene->removeItem(pausedText);
     scene->removeItem(resumeGame);
     //resumeGame->remove('');
     scene->removeItem(quit);
@@ -246,10 +255,14 @@ void gameLoop::displayPauseMenu(/*QString displayText*/)
     //disable scene items
     foreach(QGraphicsItem* a, scene->items()){
         a->setEnabled(false);
-        pauseEnemy(a);
-        pauseBullet(a);
+        if(typeid(*(a)) == typeid(enemyOne) || typeid(*(a)) == typeid(enemyTwo) || typeid(*(a)) == typeid(enemyThree) || typeid(*(a)) == typeid(enemyFour)) {
+            pauseEnemy(a);
+        }
+        if(typeid(*a) == typeid(Bullet)) {
+            pauseBullet(a);
+        }
     }
-    player->stopShooting();
+
     player->stopFastTimer();
     pauseSpawnTimer();
     pauseRoundTimer();
@@ -275,7 +288,7 @@ void gameLoop::displayPauseMenu(/*QString displayText*/)
     connect(quit, SIGNAL(clicked()), this, SLOT(close()));
 
     //create text
-    QGraphicsTextItem *pausedText = new QGraphicsTextItem(message2);
+    pausedText = new QGraphicsTextItem(message2);
     pausedText->setFont(titleFont2);
     pausedText->setPos (840, 300);
     scene->addItem(pausedText);
@@ -296,12 +309,16 @@ void gameLoop::displayGameOverWindow(QString textToDisplay)
     //disable scene items
     foreach(QGraphicsItem* a, scene->items()){
         a->setEnabled(false);
-        pauseEnemy(a);
-        pauseBullet(a);
+        if(typeid(*(a)) == typeid(enemyOne) || typeid(*(a)) == typeid(enemyTwo) || typeid(*(a)) == typeid(enemyThree) || typeid(*(a)) == typeid(enemyFour)) {
+            pauseEnemy(a);
+        }
+        if(typeid(*a) == typeid(Bullet)) {
+            pauseBullet(a);
+        }
     }
     pauseSpawnTimer();
     pauseRoundTimer();
-    player->stopShooting();
+
     player->stopFastTimer();
 
     //semi transparent panel
@@ -340,7 +357,6 @@ void gameLoop::deleteEnemy(QGraphicsItem* hitEnemy)
     for(int i = 0; i < Enemies.size(); ++i) {
         if(Enemies[i] == hitEnemy) {
             scene->removeItem(Enemies[i]);
-            delete Enemies[i]->myEnemyWeapon;
             delete Enemies[i];
             Enemies.shrink_to_fit();
             return;
@@ -451,7 +467,7 @@ void gameLoop::nextRound()
 
     case 1:
         scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space.jpg")));
-        spawnTimer->start(2000);
+        spawnTimer->start(1750);
         break;
     case 2:
         scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_blue.png")));
@@ -459,19 +475,19 @@ void gameLoop::nextRound()
         break;
     case 3:
         scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_moon.jpg")));
-        spawnTimer->start(1000);
+        spawnTimer->start(950);
         break;
     case 4:
         scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_purple.jpg")));
-        spawnTimer->start(750);
+        spawnTimer->start(650);
         break;
     case 5:
         scene->setBackgroundBrush(QBrush(QImage(":/Images/Images/space_red.gif")));
-        spawnTimer->start(700);
+        spawnTimer->start(500);
         break;
     case 6:
         player->stopFastTimer();
-        player->stopShooting();
+
         scene->removeItem(player);
         foreach(QGraphicsItem* a, scene->items()) {
             deleteEnemy(a);

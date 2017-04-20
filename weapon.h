@@ -27,6 +27,8 @@ public:
 
     Weapon(int rate, Player* owner, Enemy* ownerTwo, double scaling);
 
+    ~Weapon();
+
     //Create Spreading Weapon, Overloaded Constructor
     Weapon(int rate, Player* owner, Enemy* ownerTwo, int pellets, double scaling);
 

@@ -28,7 +28,6 @@ void enemyOne::move()
     setPos(x(),y()+speed + 2+speed);
     if(pos().y() > scene()->height()){
         scene()->removeItem(this);
-        delete this->myEnemyWeapon;
         delete this;
         return;
     }

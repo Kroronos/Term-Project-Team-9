@@ -8,6 +8,7 @@ class Enemy : public Actor
 {
 public:
     Enemy(const QString &fileName, double scaling);
+    ~Enemy();
     //Used to shoot (not deleting this before deleting the enemy will cause nullptr exception, you have been warned)
     Weapon* myEnemyWeapon;
     QTimer * timer;

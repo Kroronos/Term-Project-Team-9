@@ -18,6 +18,7 @@ Weapon::Weapon()
 
 Weapon::Weapon(int rate,Player* owner,Enemy* ownerTwo, double scaling)
 {
+    name = "testy";
     this->scaling = scaling;
     canSpread = false;
     canFire = false;
@@ -32,6 +33,15 @@ Weapon::Weapon(int rate,Player* owner,Enemy* ownerTwo, double scaling)
 
     //Set interval based on rate
     fireRate-> start(rate);
+}
+
+Weapon::~Weapon()
+{
+    if(this != nullptr) {
+        if(fireRate != nullptr){
+            delete fireRate;
+        }
+    }
 }
 
 Weapon::Weapon(int rate, Player *owner, Enemy* ownerTwo, int pellets, double scaling)
@@ -63,13 +73,20 @@ void Weapon::setCanFire(bool a)
     canFire = a;
     //Stops timer to prevent weapon being stuck in infinite shooting loop during pause, also reduces redundant calls when falser
     if(a) {
-        if(fireRate) {
+        if(fireRate != nullptr) {
             fireRate->start();
         }
     }
     else {
-        if(fireRate) {
-            fireRate->stop();
+        if(this != nullptr) {
+            if(owner != nullptr || ownerTwo != nullptr) {
+                if(fireRate != nullptr) {
+                    //THIS IS THE DEVIL, IT WILL DESTROY THE CODE
+                    //if(fireRate->isActive() == true) {
+                        fireRate->stop();
+                    //}
+                }
+            }
         }
     }
 }

@@ -47,6 +47,17 @@ Player::Player(const QString &fileName, double scaling)
     equippedWeapon = new Weapon(400, this, nullptr, 3, scaling);
 }
 
+Player::~Player()
+{
+    //Timer used to update movement and similar actions that should happen on a very fast interval
+    delete fastTimer;
+    //Timer used for staggered actions that should be continous
+    delete slowTimer;
+
+    delete equippedWeapon;
+
+}
+
 //Adds Keys Pressed By Player To A Set
 void Player::keyPressEvent(QKeyEvent* event)
 {
@@ -115,16 +126,10 @@ void Player::startFastTimer()
 
 void Player::stopFastTimer()
 {
+    foreach(Qt::Key key, keysPressed) {
+        keysPressed -= key;
+    }
     fastTimer->stop();
-}
-
-void Player::startShooting()
-{
-
-}
-
-void Player::stopShooting()
-{
     equippedWeapon->softSetCanFire(false);
 }
 
@@ -343,8 +348,10 @@ void Player::keyPressSlowAction()
     //traverse set
     foreach(QGraphicsItem* c, collision) {
         if(typeid(*(c)) == typeid(enemyOne) || typeid(*(c)) == typeid(enemyTwo) || typeid(*(c)) == typeid(enemyThree) || typeid(*(c)) == typeid(enemyFour)) {
-           decrementHealth();
-           return;
+           if(c) {
+               decrementHealth();
+               return;
+           }
         }
     }
 }

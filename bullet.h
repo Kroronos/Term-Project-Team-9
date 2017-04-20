@@ -22,6 +22,7 @@ public:
     //Create normal circular bullet
     Bullet(bool playerMade, double x, double y, double scaling);
     Bullet(bool upsideDown, bool playerMade, double x, double y, double scaling);
+    ~Bullet();
 
     bool getPlayerMade();
     void stopMovement();

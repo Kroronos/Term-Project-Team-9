@@ -52,6 +52,7 @@ private:
 
 public:
     Player(const QString &fileName, double scaling);
+    ~Player();
 
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
@@ -76,8 +77,6 @@ public:
     //Used for pause and game over
     void startFastTimer();
     void stopFastTimer();
-    void startShooting();
-    void stopShooting();
 
 public slots:
     void keyPressFastAction();

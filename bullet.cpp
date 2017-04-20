@@ -5,10 +5,8 @@
 #include "enemytwo.h"
 #include "enemythree.h"
 #include "enemyfour.h"
-#include "sounds.h"
 #include "actor.h"
 #include "score.h"
-#include "sounds.h"
 #include "gameloop.h"
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
@@ -42,6 +40,11 @@ Bullet::Bullet(bool upsideDown, bool playerMade, double x, double y, double scal
     yMove = y * getScaling();
 
     movementTimer->start(50);
+}
+
+Bullet::~Bullet()
+{
+    delete movementTimer;
 }
 
 void Bullet::move()
